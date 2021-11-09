@@ -1,0 +1,12 @@
+server:
+  port: 8003
+
+spring:
+  datasource:
+    name: easy-excel-study
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/migutv?
+    username: root
+    password: root
+
+
