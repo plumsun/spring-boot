@@ -1,3 +1,4 @@
+import com.study.App;
 import net.sf.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,7 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @program: PACKAGE_NAME
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(classes = App.class)
 public class JsonTest {
     @Test
     public void test(){
@@ -57,6 +58,20 @@ public class JsonTest {
 
     @Test
     public void test1(){
+        String str="3V3juhe021";
+        String replace = str.replace('V', 'v');
+        System.out.println("split = " + replace);
+    }
+
+
+
+
+    @Test
+    public void  test3(){
+        String str ="{\n" +
+                "    \"msg\": \"未能够识别出目标 'ST-4-7ClRTG21RfPeBwLLgbbm-o0dhXwDESKTOP-6K8RPUV'票根\",\n" +
+                "    \"code\": 500\n" +
+                "}";
 
     }
 }

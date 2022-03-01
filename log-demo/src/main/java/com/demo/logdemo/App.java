@@ -1,22 +1,21 @@
-package com.study;
+package com.demo.logdemo;
 
-
-
-import org.mybatis.spring.annotation.MapperScan;
+import com.migu.gvpcore.config.FeignClientConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
  * @description:
- * @date: 2021/11/4 9:41
+ * @date: 2021/11/19 15:55
  * @author: LiHaoHan
- * @program: com.study
+ * @program: com.demo.logdemo
  */
-@MapperScan(basePackages = {"com.study.*"})
-@EnableFeignClients
 @EnableDiscoveryClient
+@EnableFeignClients(defaultConfiguration = FeignClientConfig.class)
+@EnableHystrix
 @SpringBootApplication
 public class App {
 
