@@ -4,13 +4,14 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.HashMap;
+
 /**
  * @description:
  * @date: 2021/11/4 17:01
  * @author: LiHaoHan
  * @program: PACKAGE_NAME
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest
 public class JsonTest {
     @Test
@@ -57,6 +58,7 @@ public class JsonTest {
 
     @Test
     public void test1(){
-
+        HashMap<Object, Object> map = new HashMap<>();
+        map.entrySet().stream().forEach(System.out::println);
     }
 }
