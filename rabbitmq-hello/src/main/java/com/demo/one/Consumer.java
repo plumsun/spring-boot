@@ -1,10 +1,8 @@
 package com.demo.one;
 
-import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.Connection;
-import com.rabbitmq.client.ConnectionFactory;
+import com.rabbitmq.client.*;
 
-import java.nio.charset.StandardCharsets;
+import java.io.IOException;
 
 /**
  * @description:
@@ -12,7 +10,7 @@ import java.nio.charset.StandardCharsets;
  * @author: LiHaoHan
  * @program: com.demo.one
  */
-public class Producer {
+public class Consumer {
 
 
     private static final String QUEUE_NAME = "HELLO WORLD";
@@ -27,25 +25,25 @@ public class Producer {
         Connection connection = connectionFactory.newConnection();
         //获取信道
         Channel channel = connection.createChannel();
-        //创建队列
         /**
          * String queue 队列名
-         * boolean durable 是否持久化
-         * boolean exclusive 排他
-         * boolean autoDelete 自动删除
-         * Map<String, Object> arguments 队列参数
+         * boolean autoAck 自动回复
+         * DeliverCallback deliverCallback 传递回调
+         * CancelCallback cancelCallback 取消回调
          */
-        channel.queueDeclare(QUEUE_NAME, false, false, false, null);
-        // 发送消息
-        /**
-         * String exchange 交换机
-         * String routingKey 路由
-         * BasicProperties props 其他参数信息
-         * byte[] body  消息体
-         */
-        String message="hello world";
-        channel.basicPublish("",QUEUE_NAME,null,message.getBytes(StandardCharsets.UTF_8));
-        System.out.println("消息发送成功");
+        channel.basicConsume(QUEUE_NAME, true, new DeliverCallback() {
+            @Override
+            public void handle(String consumerTag, Delivery message) throws IOException {
+                System.out.println("consumerTag = " + consumerTag);
+                System.out.println("message = " + new String(message.getBody()));
+            }
+        }, new CancelCallback() {
+            @Override
+            public void handle(String consumerTag) throws IOException {
+                System.out.println("consumerTag = " + consumerTag);
+            }
+        });
+        System.out.println("消费");
     }
 
 }

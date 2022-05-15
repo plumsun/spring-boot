@@ -1,34 +1,34 @@
 package com.study.service.impl;
 
-import com.alibaba.excel.EasyExcel;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.study.dao.UserMapper;
-import com.study.entity.User;
-import com.study.listener.ExcelListener;
+import com.study.entity.FileUtils;
 import com.study.service.ExcelService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-/**
- * @description:
- * @date: 2021/11/4 9:45
- * @author: LiHaoHan
- * @program: com.study.service.impl
- */
+// *
+//  * @description:
+//  * @date: 2021/11/4 9:45
+//  * @author: LiHaoHan
+//  * @program: com.study.service.impl
+
+
 @Service
-public class ExcelServiceImpl extends ServiceImpl<UserMapper, User> implements ExcelService{
+public class ExcelServiceImpl implements ExcelService{
 
 
     @Override
-    public String analyse(MultipartFile file) {
+    public String analyse(HttpServletResponse response, HttpServletRequest request, MultipartFile file) {
         try {
-            EasyExcel.read(file.getInputStream(), new ExcelListener<>(this)).sheet().doRead();
+            file.getInputStream();
+            FileUtils.downloadPart(response,request,file);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+        return "成功";
     }
 }

@@ -1,4 +1,4 @@
-package utils;
+package com.demo.utils;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
@@ -8,7 +8,7 @@ import com.rabbitmq.client.ConnectionFactory;
  * @description: mq工具类
  * @date: 2022/3/2 16:50
  * @author: LiHaoHan
- * @program: utils
+ * @program: com.demo.utils
  */
 public class RabbitMQUtil {
 
