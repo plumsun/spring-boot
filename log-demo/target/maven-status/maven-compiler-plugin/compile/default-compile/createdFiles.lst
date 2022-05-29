@@ -1,8 +1,0 @@
-com\demo\logdemo\App.class
-com\demo\logdemo\feign\DemoRemoteHystrix$1.class
-com\demo\logdemo\config\LoggingAspect.class
-com\demo\logdemo\service\impl\LogDemoServiceImpl.class
-com\demo\logdemo\feign\DemoRemoteHystrix.class
-com\demo\logdemo\service\LogDemoService.class
-com\demo\logdemo\web\LogDemoController.class
-com\demo\logdemo\feign\DemoRemote.class
