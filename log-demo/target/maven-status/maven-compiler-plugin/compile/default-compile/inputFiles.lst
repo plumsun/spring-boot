@@ -1,7 +1,0 @@
-D:\study\spring-boot\log-demo\src\main\java\com\demo\logdemo\feign\DemoRemote.java
-D:\study\spring-boot\log-demo\src\main\java\com\demo\logdemo\service\LogDemoService.java
-D:\study\spring-boot\log-demo\src\main\java\com\demo\logdemo\App.java
-D:\study\spring-boot\log-demo\src\main\java\com\demo\logdemo\config\LoggingAspect.java
-D:\study\spring-boot\log-demo\src\main\java\com\demo\logdemo\feign\DemoRemoteHystrix.java
-D:\study\spring-boot\log-demo\src\main\java\com\demo\logdemo\web\LogDemoController.java
-D:\study\spring-boot\log-demo\src\main\java\com\demo\logdemo\service\impl\LogDemoServiceImpl.java
