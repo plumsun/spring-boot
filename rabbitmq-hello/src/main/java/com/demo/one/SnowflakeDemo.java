@@ -2,6 +2,7 @@ package com.demo.one;
 
 import cn.hutool.core.lang.Snowflake;
 import cn.hutool.core.util.IdUtil;
+import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 
 /**
@@ -15,7 +16,12 @@ public class SnowflakeDemo {
 
 
         RabbitTemplate rabbitTemplate = new RabbitTemplate();
-        rabbitTemplate.declare
+        rabbitTemplate.setConfirmCallback(new RabbitTemplate.ConfirmCallback() {
+            @Override
+            public void confirm(CorrelationData correlationData, boolean ack, String cause) {
+
+            }
+        });
 
 
         Snowflake snowflake = IdUtil.getSnowflake(1,1);

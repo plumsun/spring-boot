@@ -24,6 +24,8 @@ public class ExcelController {
 
     @PostMapping("upload")
     public String upload(HttpServletResponse response, HttpServletRequest request, @RequestParam("file") MultipartFile file){
+        int localPort = request.getLocalPort();
+        String remoteAddr = request.getRemoteAddr();
         return this.excelService.analyse(response,request,file);
     }
     @GetMapping("/test")
