@@ -1,34 +1,73 @@
 package com.study.service.impl;
 
-import com.study.entity.FileUtils;
+import com.study.config.ClCodShbesDao;
+import com.study.entity.ClCodShbesEntity;
 import com.study.service.ExcelService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-
-
-// *
-//  * @description:
-//  * @date: 2021/11/4 9:45
-//  * @author: LiHaoHan
-//  * @program: com.study.service.impl
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.Optional;
 
 
+@Transactional(rollbackFor = Exception.class)
 @Service
 public class ExcelServiceImpl implements ExcelService{
 
 
-    @Override
-    public String analyse(HttpServletResponse response, HttpServletRequest request, MultipartFile file) {
+    @Autowired
+    ExcelService ExcelService;
+
+    @Autowired
+    protected ClCodShbesDao clCodShbesDao;
+
+    /**
+     * 新增和修改的功能
+     * @param clCodShbesEntity
+     * @return
+     */
+    public String updShbes(ClCodShbesEntity clCodShbesEntity) throws Exception{
+        Date date = new Date(new Timestamp(System.currentTimeMillis()).getTime());
         try {
-            file.getInputStream();
-            FileUtils.downloadPart(response,request,file);
-        } catch (IOException e) {
+            clCodShbesEntity.setCreateTime(date);
+            clCodShbesEntity.setUpdateTime(date);
+            clCodShbesDao.save(clCodShbesEntity);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
+        return "添加成功";
+    }
+
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
+    @Override
+    public String update(Long id)  {
+        try {
+            Optional<ClCodShbesEntity> optional = this.clCodShbesDao.findById(id);
+            ClCodShbesEntity entity = optional.get();
+            //this.ExcelService.updateData(entity);
+            this.ExcelService.updateTime(entity);
+            System.out.println("entity = " + entity);
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return "成功";
+        return "s";
+    }
+    public void updateTime(ClCodShbesEntity entity) throws Exception{
+            entity.setOperPlaceName("2");;
+            this.clCodShbesDao.save(entity);
+            int i = 1/0;
+    }
+    public void updateData(ClCodShbesEntity entity) throws Exception{
+        try {
+            entity.setOperPlaceName("外高桥3期");
+            this.clCodShbesDao.save(entity);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
     }
 }

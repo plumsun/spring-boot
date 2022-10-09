@@ -1,7 +1,11 @@
 package com.study.controller;
 
+import cn.hutool.core.lang.hash.Hash;
+import com.study.entity.ClCodShbesEntity;
 import com.study.service.ExcelService;
+import oracle.jdbc.proxy.annotation.Post;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,12 +26,6 @@ public class ExcelController {
     @Autowired
     private ExcelService excelService;
 
-    @PostMapping("upload")
-    public String upload(HttpServletResponse response, HttpServletRequest request, @RequestParam("file") MultipartFile file){
-        int localPort = request.getLocalPort();
-        String remoteAddr = request.getRemoteAddr();
-        return this.excelService.analyse(response,request,file);
-    }
     @GetMapping("/test")
     public String test(){
         return "s";
@@ -38,5 +36,16 @@ public class ExcelController {
         String qq = request.getHeader("qq");
         System.out.println("qq = " + qq);
         System.out.println("map = " + map);
+    }
+
+    @PostMapping("updShbes")
+    @Transactional(rollbackFor = Exception.class)
+    public String updShbes(@RequestBody HashMap  map) throws Exception {
+        return "";
+    }
+
+    @PostMapping("update")
+    public String update(@RequestParam Long id) throws Exception {
+       return this.excelService.update(id);
     }
 }
