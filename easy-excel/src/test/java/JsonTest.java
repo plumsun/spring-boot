@@ -1,5 +1,10 @@
 
+import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.json.JSONUtil;
+import com.study.entity.RestResult;
+import com.study.entity.TestDemo;
 import net.sf.json.JSONObject;
+import netscape.javascript.JSException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -61,5 +66,38 @@ public class JsonTest {
     public void test1(){
         HashMap<Object, Object> map = new HashMap<>();
         map.entrySet().stream().forEach(System.out::println);
+    }
+
+
+    @Test
+    public void test2(){
+        Object set = set();
+        cn.hutool.json.JSONObject object = JSONUtil.parseObj(set);
+        HashMap map = object.toBean(HashMap.class);
+        Object o = map.get("2");
+        if(!ObjectUtil.isEmpty(o)){
+            System.out.println("o = " + o);
+        }
+        System.out.println("object = " + map);
+    }
+
+    @Test
+    public void test3(){
+        RestResult chenggong = RestResult.T("chenggong");
+
+        System.out.println("result = " + chenggong);
+    }
+
+
+
+    private Object set(){
+        HashMap<Object, Object> map = new HashMap<>();
+        map.put("data","data");
+        map.put("pk","1");
+        System.out.println("map = " + map);
+        TestDemo testDemo = new TestDemo();
+        testDemo.setId("1");
+        testDemo.setObj(map);
+        return map;
     }
 }

@@ -15,7 +15,7 @@ public interface ExcelService{
 
     String updShbes(ClCodShbesEntity clCodShbesEntity) throws Exception;
 
-    String update(Long id) throws Exception;
+    String update( HttpServletResponse response,Long id) throws Exception;
 
     void updateData(ClCodShbesEntity entity) throws Exception;
 

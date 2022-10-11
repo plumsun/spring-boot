@@ -2,6 +2,7 @@ package com.study.controller;
 
 import cn.hutool.core.lang.hash.Hash;
 import com.study.entity.ClCodShbesEntity;
+import com.study.entity.RestResult;
 import com.study.service.ExcelService;
 import oracle.jdbc.proxy.annotation.Post;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,12 @@ public class ExcelController {
     }
 
     @PostMapping("update")
-    public String update(@RequestParam Long id) throws Exception {
-       return this.excelService.update(id);
+    public String update(@RequestParam Long id,HttpServletResponse response) throws Exception {
+       return this.excelService.update(response,id);
+    }
+
+    @PostMapping("result")
+    public RestResult<Object> result() throws Exception {
+        return RestResult.T("成功");
     }
 }
