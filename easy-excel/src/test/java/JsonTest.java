@@ -1,16 +1,18 @@
-
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.json.JSONUtil;
 import com.study.entity.RestResult;
+import com.study.entity.Test;
 import com.study.entity.TestDemo;
 import net.sf.json.JSONObject;
-import netscape.javascript.JSException;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.apache.commons.lang.SerializationUtils;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @description:
@@ -20,7 +22,7 @@ import java.util.HashMap;
  */
 @SpringBootTest
 public class JsonTest {
-    @Test
+    @org.junit.Test
     public void test(){
         String str="{\n" +
                 "    \"code\": 200,\n" +
@@ -62,14 +64,33 @@ public class JsonTest {
     }
 
 
-    @Test
-    public void test1(){
-        HashMap<Object, Object> map = new HashMap<>();
-        map.entrySet().stream().forEach(System.out::println);
+    @org.junit.Test
+    public void test1() throws InvocationTargetException, IllegalAccessException, InstantiationException, NoSuchMethodException {
+        ArrayList<Test> list1 = new ArrayList<>();
+        // ArrayList<Test> list2 = new ArrayList<>();
+        list1.add(new Test("1","li"));
+        list1.add(new Test("2","l"));
+        ArrayList<Test> list2 = (ArrayList) SerializationUtils.clone((Serializable) list1);
+        System.out.println("list1 = " + list1);
+        System.out.println("list2 = " + list2);
+    }
+
+    @org.junit.Test
+    public void pai(){
+        String str = "{\"name\":\"xxx\",\"abc\":\"wwwwsss\"}";
+        com.alibaba.fastjson.JSONObject object = com.alibaba.fastjson.JSONObject.parseObject(str);
+        object.entrySet().stream().sorted(new Comparator<Map.Entry<String, Object>>() {
+            @Override
+            public int compare(Map.Entry<String, Object> o1, Map.Entry<String, Object> o2) {
+                return o1.getKey() .compareTo(o2.getKey()) ;
+            }
+        }).forEach(System.out::println);
+        String s = object.toJSONString();
+        System.out.println("s = " + s);
     }
 
 
-    @Test
+    @org.junit.Test
     public void test2(){
         Object set = set();
         cn.hutool.json.JSONObject object = JSONUtil.parseObj(set);
@@ -81,7 +102,7 @@ public class JsonTest {
         System.out.println("object = " + map);
     }
 
-    @Test
+    @org.junit.Test
     public void test3(){
         RestResult chenggong = RestResult.T("chenggong");
 

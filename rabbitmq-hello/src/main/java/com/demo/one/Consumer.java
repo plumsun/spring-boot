@@ -43,6 +43,8 @@ public class Consumer {
                 System.out.println("consumerTag = " + consumerTag);
             }
         });
+        //消费者确认
+        channel.basicAck(1L,true);
         System.out.println("消费");
     }
 

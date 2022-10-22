@@ -31,7 +31,11 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-
+        <dependency>
+            <groupId>com.oracle.database.jdbc</groupId>
+            <artifactId>ojdbc6</artifactId>
+            <version>11.2.0.4</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -109,6 +113,13 @@
             <version>3.9</version>
             <scope>compile</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.greenrobot/greendao -->
+        <dependency>
+            <groupId>org.greenrobot</groupId>
+            <artifactId>greendao</artifactId>
+            <version>3.2.2</version>
+        </dependency>
+
         <!-- json -->
         <dependency>
             <groupId>net.sf.json-lib</groupId>
@@ -122,11 +133,18 @@
             <version>1.2.7</version>
             <scope>compile</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+        </dependency>
         <!--redis-->
        <!-- <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>-->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+        </dependency>
     </dependencies>
 </project>
