@@ -23,3 +23,6 @@ spring:
     hibernate:
       ddl-auto: update
     open-in-view: false
+  redis:
+    host: 124.221.161.153
+    password: root

@@ -1,18 +1,16 @@
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.json.JSONUtil;
 import com.study.entity.RestResult;
+import com.study.entity.StatusType;
 import com.study.entity.Test;
 import com.study.entity.TestDemo;
 import net.sf.json.JSONObject;
-import org.apache.commons.lang.SerializationUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.StringRedisTemplate;
 
-import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @description:
@@ -70,9 +68,15 @@ public class JsonTest {
         // ArrayList<Test> list2 = new ArrayList<>();
         list1.add(new Test("1","li"));
         list1.add(new Test("2","l"));
-        ArrayList<Test> list2 = (ArrayList) SerializationUtils.clone((Serializable) list1);
+
+        ArrayList<Test> list2 = new ArrayList<>();
+        // ArrayList<Test> list2 = new ArrayList<>();
+        list1.add(new Test("1","li"));
+        list1.add(new Test("2","l"));
+        Collections.copy(list1,list2);
+        // ArrayList<Test> list2 = (ArrayList) SerializationUtils.clone((Serializable) list1);
         System.out.println("list1 = " + list1);
-        System.out.println("list2 = " + list2);
+        // System.out.println("list2 = " + list2);
     }
 
     @org.junit.Test
@@ -104,6 +108,9 @@ public class JsonTest {
 
     @org.junit.Test
     public void test3(){
+        String statusType = StatusType.getInfoByCode("1");
+
+        System.out.println(statusType);
         RestResult chenggong = RestResult.T("chenggong");
 
         System.out.println("result = " + chenggong);
@@ -120,5 +127,13 @@ public class JsonTest {
         testDemo.setId("1");
         testDemo.setObj(map);
         return map;
+    }
+
+    @Autowired
+    StringRedisTemplate redisTemplate;
+
+    @org.junit.Test
+    public void redisTest(){
+        redisTemplate.boundListOps("s").leftPush(new Test("1","li").toString());
     }
 }

@@ -1,14 +1,18 @@
 package com.study.controller;
 
+import cn.hutool.json.JSONUtil;
 import com.study.entity.RestResult;
+import com.study.entity.Test;
 import com.study.service.ExcelService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -23,6 +27,9 @@ public class ExcelController {
 
     @Autowired
     private ExcelService excelService;
+
+    @Autowired
+    private StringRedisTemplate redisTemplate;
 
     @PostMapping("upload")
     public String upload(HttpServletResponse response, HttpServletRequest request, @RequestParam("file") MultipartFile file){
@@ -54,5 +61,17 @@ public class ExcelController {
     @PostMapping("result")
     public RestResult<Object> result() throws Exception {
         return RestResult.T("成功");
+    }
+
+    @PostMapping("redis")
+    public void redisTest(){
+        ArrayList<Test> list = new ArrayList<>();
+        list.add(new Test("1","li"));
+        list.add(new Test("1","li"));
+        redisTemplate.boundListOps("s").leftPush(JSONUtil.toJsonStr(list));
+        list.add(new Test("1","li"));
+        list.add(new Test("1","li"));
+        redisTemplate.boundListOps("s").leftPush(JSONUtil.toJsonStr(list));
+        redisTemplate.opsForList();
     }
 }
