@@ -1,6 +1,8 @@
 package com.study.service.impl;
 
+import cn.hutool.http.server.HttpServerResponse;
 import com.study.config.ClCodShbesDao;
+import com.study.config.GlobalRestExceptionHandler;
 import com.study.entity.ClCodShbesEntity;
 import com.study.service.ExcelService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Optional;
@@ -20,7 +23,7 @@ public class ExcelServiceImpl implements ExcelService {
 
 
     @Autowired
-    ExcelService ExcelService;
+    ExcelService excelService;
 
     @Autowired
     protected ClCodShbesDao clCodShbesDao;
@@ -31,6 +34,7 @@ public class ExcelServiceImpl implements ExcelService {
      * @param clCodShbesEntity
      * @return
      */
+    @Override
     public String updShbes(ClCodShbesEntity clCodShbesEntity) throws Exception {
         Date date = new Date(new Timestamp(System.currentTimeMillis()).getTime());
         try {
@@ -51,8 +55,8 @@ public class ExcelServiceImpl implements ExcelService {
             String str = "s";
             Optional<ClCodShbesEntity> optional = this.clCodShbesDao.findById(id);
             ClCodShbesEntity entity = optional.get();
-            this.ExcelService.updateData(entity);
-            this.ExcelService.updateTime(entity);
+            this.excelService.updateData(entity);
+            this.excelService.updateTime(entity);
             return str;
         } catch (Exception e) {
             e.printStackTrace();
@@ -60,6 +64,7 @@ public class ExcelServiceImpl implements ExcelService {
         }
     }
 
+    @Override
     public void updateTime(ClCodShbesEntity entity) throws Exception {
         entity.setOperPlaceName("3");
         this.clCodShbesDao.save(entity);
@@ -67,6 +72,7 @@ public class ExcelServiceImpl implements ExcelService {
         //int i = 1/0;
     }
 
+    @Override
     public void updateData(ClCodShbesEntity entity) throws Exception {
         try {
             entity.setOperPlaceName("外高桥3期");

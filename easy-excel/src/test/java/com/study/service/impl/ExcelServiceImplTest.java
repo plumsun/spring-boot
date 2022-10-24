@@ -1,8 +1,7 @@
 package com.study.service.impl;
 
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -13,10 +12,11 @@ import java.util.HashSet;
  * @author: LiHaoHan
  * @program: com.study.service.impl
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest
-class ExcelServiceImplTest {
-    public static void main(String[] args) {
+public class ExcelServiceImplTest {
+
+    @org.junit.Test
+    public void extracted() {
         ArrayList<Integer> objects = new ArrayList<>();
         objects.add(1);
         objects.add(null);

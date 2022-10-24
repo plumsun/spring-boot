@@ -1,11 +1,14 @@
+
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.json.JSONUtil;
+import com.google.common.base.Joiner;
 import com.study.entity.RestResult;
 import com.study.entity.StatusType;
 import com.study.entity.Test;
 import com.study.entity.TestDemo;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.commons.lang.text.StrBuilder;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
@@ -21,8 +24,8 @@ import java.util.*;
 @SpringBootTest
 public class JsonTest {
     @org.junit.Test
-    public void test(){
-        String str="{\n" +
+    public void test() {
+        String str = "{\n" +
                 "    \"code\": 200,\n" +
                 "    \"body\": {\n" +
                 "        \"code\": 0,\n" +
@@ -66,27 +69,27 @@ public class JsonTest {
     public void test1() throws InvocationTargetException, IllegalAccessException, InstantiationException, NoSuchMethodException {
         ArrayList<Test> list1 = new ArrayList<>();
         // ArrayList<Test> list2 = new ArrayList<>();
-        list1.add(new Test("1","li"));
-        list1.add(new Test("2","l"));
+        list1.add(new Test("1", "li"));
+        list1.add(new Test("2", "l"));
 
         ArrayList<Test> list2 = new ArrayList<>();
         // ArrayList<Test> list2 = new ArrayList<>();
-        list1.add(new Test("1","li"));
-        list1.add(new Test("2","l"));
-        Collections.copy(list1,list2);
+        list1.add(new Test("1", "li"));
+        list1.add(new Test("2", "l"));
+        Collections.copy(list1, list2);
         // ArrayList<Test> list2 = (ArrayList) SerializationUtils.clone((Serializable) list1);
         System.out.println("list1 = " + list1);
         // System.out.println("list2 = " + list2);
     }
 
     @org.junit.Test
-    public void pai(){
+    public void pai() {
         String str = "{\"name\":\"xxx\",\"abc\":\"wwwwsss\"}";
         com.alibaba.fastjson.JSONObject object = com.alibaba.fastjson.JSONObject.parseObject(str);
         object.entrySet().stream().sorted(new Comparator<Map.Entry<String, Object>>() {
             @Override
             public int compare(Map.Entry<String, Object> o1, Map.Entry<String, Object> o2) {
-                return o1.getKey() .compareTo(o2.getKey()) ;
+                return o1.getKey().compareTo(o2.getKey());
             }
         }).forEach(System.out::println);
         String s = object.toJSONString();
@@ -95,19 +98,19 @@ public class JsonTest {
 
 
     @org.junit.Test
-    public void test2(){
+    public void test2() {
         Object set = set();
         cn.hutool.json.JSONObject object = JSONUtil.parseObj(set);
         HashMap map = object.toBean(HashMap.class);
         Object o = map.get("2");
-        if(!ObjectUtil.isEmpty(o)){
+        if (!ObjectUtil.isEmpty(o)) {
             System.out.println("o = " + o);
         }
         System.out.println("object = " + map);
     }
 
     @org.junit.Test
-    public void test3(){
+    public void test3() {
         String statusType = StatusType.getInfoByCode("1");
 
         System.out.println(statusType);
@@ -117,11 +120,27 @@ public class JsonTest {
     }
 
 
+    @org.junit.Test
+    public void test4() {
+        ArrayList<String> elementShip00 = new ArrayList<>();
+        ArrayList<String> element10 = new ArrayList<>();
+        String element60 = "";
+        String element99 = "";
+        StrBuilder sb = new StrBuilder();
+        String property = "'";
+        sb.append(Joiner.on(":").join(elementShip00)).append(property);
+//      sb.append(element02);
+        sb.append(Joiner.on(":").join(element10)).append(property);
+        sb.append(element60);
+        sb.append(element99).append(property);
+        System.out.println("sb = " + sb);
+    }
 
-    private Object set(){
+
+    private Object set() {
         HashMap<Object, Object> map = new HashMap<>();
-        map.put("data","data");
-        map.put("pk","1");
+        map.put("data", "data");
+        map.put("pk", "1");
         System.out.println("map = " + map);
         TestDemo testDemo = new TestDemo();
         testDemo.setId("1");
@@ -133,7 +152,7 @@ public class JsonTest {
     StringRedisTemplate redisTemplate;
 
     @org.junit.Test
-    public void redisTest(){
-        redisTemplate.boundListOps("s").leftPush(new Test("1","li").toString());
+    public void redisTest() {
+        redisTemplate.boundListOps("s").leftPush(new Test("1", "li").toString());
     }
 }
