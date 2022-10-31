@@ -9,6 +9,7 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.xml.ws.RespectBinding;
 
@@ -18,7 +19,7 @@ import javax.xml.ws.RespectBinding;
  * @Author: LiHaoHan
  * @Description:
  */
-@Controller
+@RestController
 @RequestMapping("/kafka")
 public class KafkaController {
 
@@ -28,6 +29,13 @@ public class KafkaController {
     @Value("${spring.kafka.consumer.group-id}")
     String topic;
 
+    @Value("${file.path:d:/1}")
+    String path;
+
+    /**
+     * kafka发送消息，异步发送，接收ack
+     * @param value
+     */
     @GetMapping("producer")
     public void proTest(@RequestParam String value){
         System.out.println("value = " + value);
@@ -43,7 +51,10 @@ public class KafkaController {
                         + result.getRecordMetadata().partition() + "-" + result.getRecordMetadata().offset());
             }
         });
+    }
 
-
+    @GetMapping("getProp")
+    public String valueTest(){
+        return path;
     }
 }

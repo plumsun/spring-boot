@@ -3,6 +3,10 @@ server:
 
 
 spring:
+  cloud:
+    config:
+      #配置文件优先级，true本地优先级高，false远程优先级高
+      allowOverride: true
   application:
     name: kafka-demo
   datasource:
@@ -84,5 +88,5 @@ spring:
 
 
 
-#file:
-#  path: F:/movie/
+file:
+  path: F:/movie/
