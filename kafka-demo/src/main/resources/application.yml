@@ -1,0 +1,88 @@
+server:
+  port: 8003
+
+
+spring:
+  application:
+    name: kafka-demo
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+  #  servlet:
+  #    multipart:
+  #      max-file-size: 10240MB  #单个文件大小限制
+  #      max-request-size: 10240MB #总文件大小限制（允许存储文件的文件夹大小）
+  #重要提示:kafka配置,该配置属性将直接注入到KafkaTemplate中
+  kafka:
+    producer:
+      bootstrap-servers: 192.168.129.122:9092,192.168.129.123:9092,192.168.129.124:9092
+      retries: 2 #生产者发送消息失败重试次数
+      batch-size: 16384 # 同一批次内存大小（默认16K）
+      buffer-memory: 314572800 #生产者内存缓存区大小(300M = 300*1024*1024)
+      #acks=0:无论成功还是失败，只发送一次。无需确认
+      #acks=1:即只需要确认leader收到消息
+      #acks=all或-1:ISR + Leader都确定收到
+      acks: 1
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer #key的编解码方法
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer #key的编解码方法
+      #开启事务，但是要求ack为all，否则无法保证幂等性
+      #transaction-id-prefix: "COLA_TX"
+      #额外的，没有直接有properties对应的参数，将存放到下面这个Map对象中，一并初始化
+#      properties:
+#        #自定义拦截器，注意，这里结尾时classes(先于分区器，快递先贴了标签再指定地址)
+#        interceptor.classes: cn.com.controller.TimeInterceptor
+#        #自定义分区器
+#        #partitioner.class: com.alibaba.cola.kafka.test.customer.inteceptor.MyPartitioner
+#        #即使达不到batch-size设定的大小，只要超过这个毫秒的时间，一样会发送消息出去
+#        linger.ms: 1000
+#        #最大请求大小，200M = 200*1024*1024
+#        max.request.size: 209715200
+#        #Producer.send()方法的最大阻塞时间(115秒)
+#        max.block.ms: 115000
+#        #该配置控制客户端等待请求响应的最长时间。
+#        #如果超时之前仍未收到响应，则客户端将在必要时重新发送请求，如果重试次数（retries）已用尽，则会使请求失败。
+#        #此值应大于replica.lag.time.max.ms（broker配置），以减少由于不必要的生产者重试而导致消息重复的可能性。
+#        request.timeout.ms: 115000
+#        #等待send回调的最大时间。常用语重试，如果一定要发送，retries则配Integer.MAX
+#        #如果超过该时间：TimeoutException: Expiring 1 record(s) .. has passed since batch creation
+#        delivery.timeout.ms: 120000
+    #https://kafka.apache.org/documentation/#consumerconfigs
+    consumer:
+      bootstrap-servers: 192.168.129.122:9092,192.168.129.123:9092,192.168.129.124:9092
+      group-id: auto-dev #消费者组
+      auto-offset-reset: earliest #消费方式: earliest：从头开始消费   latest：从最新的开始消费   默认latest
+      enable-auto-commit: false #是否自动提交偏移量offset
+      auto-commit-interval: 1S #前提是 enable-auto-commit=true。自动提交的频率
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      max-poll-records: 2
+#      properties:
+#        #如果在这个时间内没有收到心跳，该消费者会被踢出组并触发{组再平衡 rebalance}
+#        session.timeout.ms: 120000
+#        #最大消费时间。此决定了获取消息后提交偏移量的最大时间，超过设定的时间（默认5分钟），服务端也会认为该消费者失效。踢出并再平衡
+#        max.poll.interval.ms: 300000
+#        #配置控制客户端等待请求响应的最长时间。
+#        #如果在超时之前没有收到响应，客户端将在必要时重新发送请求，
+#        #或者如果重试次数用尽，则请求失败。
+#        request.timeout.ms: 60000
+#        # 服务器返回的最大数据量，不能超过admin的message.max.bytes单条数据最大大小
+#        max.partition.fetch.bytes: 1048576
+#        #订阅或分配主题时，允许自动创建主题。0.11之前，必须设置false
+#        allow.auto.create.topics: true
+    listener:
+      #当enable.auto.commit的值设置为false时，该值会生效；为true时不会生效
+      #manual_immediate:需要手动调用Acknowledgment.acknowledge()后立即提交
+      ack-mode: manual_immediate
+      missing-topics-fatal: true #如果至少有一个topic不存在，true启动失败。false忽略
+      #type: single #单条消费？批量消费？ #批量消费需要配合 consumer.max-poll-records
+      type: batch
+      concurrency: 2 #配置多少，就为为每个消费者实例创建多少个线程。多出分区的线程空闲
+    template:
+      default-topic: "COLA"
+
+
+
+#file:
+#  path: F:/movie/
