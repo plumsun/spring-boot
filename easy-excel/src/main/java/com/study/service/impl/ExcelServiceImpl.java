@@ -4,7 +4,9 @@ import cn.hutool.http.server.HttpServerResponse;
 import com.study.config.ClCodShbesDao;
 import com.study.config.GlobalRestExceptionHandler;
 import com.study.entity.ClCodShbesEntity;
+import com.study.entity.ResultBaseException;
 import com.study.service.ExcelService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -17,6 +19,7 @@ import java.util.Date;
 import java.util.Optional;
 
 
+@Slf4j
 @Transactional(rollbackFor = Exception.class)
 @Service
 public class ExcelServiceImpl implements ExcelService {
@@ -48,28 +51,25 @@ public class ExcelServiceImpl implements ExcelService {
         return "添加成功";
     }
 
-    @Transactional(propagation = Propagation.NOT_SUPPORTED)
     @Override
     public String update(HttpServletResponse response, Long id) throws Exception {
         try {
             String str = "s";
             Optional<ClCodShbesEntity> optional = this.clCodShbesDao.findById(id);
             ClCodShbesEntity entity = optional.get();
-            this.excelService.updateData(entity);
-            this.excelService.updateTime(entity);
+            entity.setOperPlaceName("3");
+            this.clCodShbesDao.save(entity);
+            excelService.updateTime(entity);
             return str;
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new Exception(id.toString());
+            //当抛出自定义异常时，需要将catch到异常的case信息也抛出
+            throw new ResultBaseException(500, "系统异常", "500", "程序出问题了，请稍后再试",e.getCause());
         }
     }
 
     @Override
     public void updateTime(ClCodShbesEntity entity) throws Exception {
-        entity.setOperPlaceName("3");
-        this.clCodShbesDao.save(entity);
         int i = 1 / 0;
-        //int i = 1/0;
     }
 
     @Override
@@ -81,5 +81,12 @@ public class ExcelServiceImpl implements ExcelService {
             e.printStackTrace();
             throw new RuntimeException();
         }
+    }
+
+
+    @Override
+    public String save(ClCodShbesEntity clCodShbes) {
+        this.clCodShbesDao.save(clCodShbes);
+        return "s";
     }
 }

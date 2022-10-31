@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @description:
+ * @description: 测试实体类
  * @date: 2022/9/3 14:57
  * @author: LiHaoHan
  * @program: com.study.entity

@@ -65,22 +65,7 @@ public class JsonTest {
     }
 
 
-    @org.junit.Test
-    public void test1() throws InvocationTargetException, IllegalAccessException, InstantiationException, NoSuchMethodException {
-        ArrayList<Test> list1 = new ArrayList<>();
-        // ArrayList<Test> list2 = new ArrayList<>();
-        list1.add(new Test("1", "li"));
-        list1.add(new Test("2", "l"));
 
-        ArrayList<Test> list2 = new ArrayList<>();
-        // ArrayList<Test> list2 = new ArrayList<>();
-        list1.add(new Test("1", "li"));
-        list1.add(new Test("2", "l"));
-        Collections.copy(list1, list2);
-        // ArrayList<Test> list2 = (ArrayList) SerializationUtils.clone((Serializable) list1);
-        System.out.println("list1 = " + list1);
-        // System.out.println("list2 = " + list2);
-    }
 
     @org.junit.Test
     public void pai() {
@@ -96,63 +81,4 @@ public class JsonTest {
         System.out.println("s = " + s);
     }
 
-
-    @org.junit.Test
-    public void test2() {
-        Object set = set();
-        cn.hutool.json.JSONObject object = JSONUtil.parseObj(set);
-        HashMap map = object.toBean(HashMap.class);
-        Object o = map.get("2");
-        if (!ObjectUtil.isEmpty(o)) {
-            System.out.println("o = " + o);
-        }
-        System.out.println("object = " + map);
-    }
-
-    @org.junit.Test
-    public void test3() {
-        String statusType = StatusType.getInfoByCode("1");
-
-        System.out.println(statusType);
-        RestResult chenggong = RestResult.T("chenggong");
-
-        System.out.println("result = " + chenggong);
-    }
-
-
-    @org.junit.Test
-    public void test4() {
-        ArrayList<String> elementShip00 = new ArrayList<>();
-        ArrayList<String> element10 = new ArrayList<>();
-        String element60 = "";
-        String element99 = "";
-        StrBuilder sb = new StrBuilder();
-        String property = "'";
-        sb.append(Joiner.on(":").join(elementShip00)).append(property);
-//      sb.append(element02);
-        sb.append(Joiner.on(":").join(element10)).append(property);
-        sb.append(element60);
-        sb.append(element99).append(property);
-        System.out.println("sb = " + sb);
-    }
-
-
-    private Object set() {
-        HashMap<Object, Object> map = new HashMap<>();
-        map.put("data", "data");
-        map.put("pk", "1");
-        System.out.println("map = " + map);
-        TestDemo testDemo = new TestDemo();
-        testDemo.setId("1");
-        testDemo.setObj(map);
-        return map;
-    }
-
-    @Autowired
-    StringRedisTemplate redisTemplate;
-
-    @org.junit.Test
-    public void redisTest() {
-        redisTemplate.boundListOps("s").leftPush(new Test("1", "li").toString());
-    }
 }

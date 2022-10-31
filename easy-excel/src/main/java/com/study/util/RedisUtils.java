@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @description:
+ * @description: Redis工具类
  * @date: 2022/10/22 20:36
  * @author: LiHaoHan
  * @program: com.study.util
