@@ -76,15 +76,9 @@ public class ExcelController {
      */
     @PostMapping("web")
     public void checkBoxing(@RequestBody HashMap map) throws Exception {
+        ArrayList<String> strings = new ArrayList<>();
         try {
-            String requestUrl = "http://192.168.12.125/MSAWebService/BoxingInfo.asmx?wsdl";
-            Object containCert = map.get("containCert");
-            int i=1/0;
-            Object ctnNo = map.get("ctnNo");
-            Object containDate = map.get("containDate");
-            Map<String, String> result = WebServiceClientU.callWebSVDiff(requestUrl, "CheckBoxing",
-                    containCert, ctnNo, containDate, DateUtil.format(new Date(), DatePattern.PURE_DATETIME_PATTERN));
-
+            this.excelService.rpc(map);
         } catch (RuntimeException e){
             throw e;
         } catch (IOException e){
