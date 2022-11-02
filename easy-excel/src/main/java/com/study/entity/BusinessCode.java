@@ -1,6 +1,8 @@
 package com.study.entity;
 
 
+import com.study.entity.resp.CodeI;
+
 /**
  * 错误状态信息
  */

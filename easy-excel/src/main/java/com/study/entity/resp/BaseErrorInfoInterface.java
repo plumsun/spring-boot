@@ -1,4 +1,4 @@
-package com.study.config;
+package com.study.entity.resp;
 
 /**
  * @program: BaseErrorInfoInterface

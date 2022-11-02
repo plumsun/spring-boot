@@ -5,7 +5,7 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.google.common.base.Joiner;
-import com.study.entity.RestResult;
+import com.study.entity.resp.RestResult;
 import com.study.entity.StatusType;
 import com.study.entity.Test;
 import com.study.entity.TestDemo;

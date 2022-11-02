@@ -1,4 +1,4 @@
-package com.study.config;
+package com.study.entity.resp;
 
 import com.alibaba.fastjson.JSONObject;
 import com.study.entity.BusinessCode;

@@ -1,5 +1,7 @@
-package com.study.entity;
+package com.study.exception;
 
+
+import com.study.entity.resp.CodeI;
 
 /**
  * 自定义异常

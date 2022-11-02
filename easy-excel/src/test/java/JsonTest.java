@@ -1,18 +1,7 @@
 
-import cn.hutool.core.util.ObjectUtil;
-import cn.hutool.json.JSONUtil;
-import com.google.common.base.Joiner;
-import com.study.entity.RestResult;
-import com.study.entity.StatusType;
-import com.study.entity.Test;
-import com.study.entity.TestDemo;
 import net.sf.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.apache.commons.lang.text.StrBuilder;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.redis.core.StringRedisTemplate;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 /**

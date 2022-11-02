@@ -1,5 +1,4 @@
-package com.study.entity;
-
+package com.study.entity.resp;
 
 
 /*

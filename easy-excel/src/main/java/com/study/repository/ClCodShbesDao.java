@@ -1,4 +1,4 @@
-package com.study.config;
+package com.study.repository;
 
 import com.study.entity.ClCodShbesEntity;
 import org.springframework.data.repository.CrudRepository;

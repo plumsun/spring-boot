@@ -1,4 +1,4 @@
-package com.study.entity;
+package com.study.entity.resp;
 
 /**
  * 获取错误信息接口
