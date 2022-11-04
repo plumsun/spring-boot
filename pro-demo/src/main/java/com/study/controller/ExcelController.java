@@ -99,6 +99,7 @@ public class ExcelController {
      */
     @PostMapping("save")
     public String save(@RequestBody ClCodShbesEntity clCodShbes, HttpServletResponse response) throws Exception {
+        System.out.println("clCodShbes = " + clCodShbes);
         return this.excelService.save(clCodShbes);
     }
 

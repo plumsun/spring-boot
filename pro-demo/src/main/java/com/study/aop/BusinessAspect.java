@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
 
 
 @Aspect
@@ -42,7 +43,8 @@ public class BusinessAspect {
     @Before("businessAuthenticationPointcut()")
     public void doBefore(JoinPoint joinPoint) throws Throwable {
         log.info("前置通知");
-
+        Object[] args = joinPoint.getArgs();
+        System.out.println("args = " + Arrays.toString(args));
         // 开始打印请求日志
         print(joinPoint);
     }
@@ -86,6 +88,7 @@ public class BusinessAspect {
         log.info("IP             : {}", request.getRemoteAddr());
         // 打印请求入参
         String params = getParams(point);
+        System.out.println("params = " + params);
         log.info("Request Args   : {}", getParams(point));
         // 排除字段，敏感字段或太长的字段不显示
         String[] excludeProperties = {"password", "file"};
@@ -103,6 +106,7 @@ public class BusinessAspect {
      */
     private static String getParams(JoinPoint joinPoint) {
         Object[] args = joinPoint.getArgs();
+        System.out.println("args = " + Arrays.toString(args));
         StringBuilder params = new StringBuilder();
         if (args != null && args.length > 0) {
             for (Object arg : args) {
@@ -118,6 +122,7 @@ public class BusinessAspect {
                 }
             }
         }
+        System.out.println("params.toString() = " + params.toString());
         return params.toString();
     }
 }

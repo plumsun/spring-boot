@@ -1,5 +1,5 @@
 server:
-  port: 9002
+  port: 8080
 
 
 spring:
@@ -7,9 +7,12 @@ spring:
     name: test
   datasource:
     driver-class-name: oracle.jdbc.driver.OracleDriver
-    url: jdbc:oracle:thin:@192.168.131.52:1521:dev12c
+    url: jdbc:oracle:thin:@192.168.130.138:1521:dev12c
+#    url: jdbc:oracle:thin:@192.168.130.113:1521:testswin
     username: MSA_DG_DECL
     password: easipass
+#    username: MSA_DG_DECL
+#    password: etestpwd
   #    url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai
 #    username: root
 #    password: root
