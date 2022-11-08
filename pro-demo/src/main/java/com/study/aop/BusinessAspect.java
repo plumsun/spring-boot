@@ -2,10 +2,12 @@ package com.study.aop;
 
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.support.spring.PropertyPreFilters;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -91,11 +93,12 @@ public class BusinessAspect {
         System.out.println("params = " + params);
         log.info("Request Args   : {}", getParams(point));
         // 排除字段，敏感字段或太长的字段不显示
-        String[] excludeProperties = {"password", "file"};
-        PropertyPreFilters filters = new PropertyPreFilters();
-        PropertyPreFilters.MySimplePropertyPreFilter excludefilter = filters.addFilter();
-        excludefilter.addExcludes(excludeProperties);
-        log.info("请求参数: {}", JSONObject.toJSONString(params, excludefilter));
+        //String[] excludeProperties = {"password", "file"};
+        //PropertyPreFilters filters = new PropertyPreFilters();
+        //PropertyPreFilters.MySimplePropertyPreFilter excludefilter = filters.addFilter();
+        //excludefilter.addExcludes(excludeProperties);
+        //log.info("请求参数: {}", JSONObject.toJSONString(params, excludefilter));
+        log.info("请求参数: {}", JSONObject.toJSONString(params));
     }
 
     /**
