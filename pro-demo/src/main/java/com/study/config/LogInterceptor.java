@@ -22,9 +22,11 @@ public class LogInterceptor implements HandlerInterceptor {
 
     private static final String traceId = "traceId";
 
+    // private static ThreadLocal<Object> threadLocal = new ThreadLocal<>();
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        if(!MDC.getCopyOfContextMap().containsKey(traceId)){
+        if(request.getHeader(traceId).isEmpty()){
             String traceId = UUID.randomUUID().toString().split("-")[4];
             MDC.put("traceId",traceId);
             log.info("traceId:{}",traceId);
