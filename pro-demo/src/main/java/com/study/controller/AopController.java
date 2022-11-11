@@ -1,8 +1,10 @@
 package com.study.controller;
 
+import com.study.service.AopService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 
@@ -16,6 +18,11 @@ import java.util.HashMap;
 @RestController
 @RequestMapping("aop")
 public class AopController {
+
+
+    @Resource
+    private AopService aopService;
+
 
     /**
      * 切面测试，请求日志打印
@@ -52,6 +59,15 @@ public class AopController {
         String qq = request.getHeader("qq");
         System.out.println("qq = " + qq);
         System.out.println("map = " + map);
+    }
+
+    /**
+     * 异步方法异常测试
+     */
+    @GetMapping("async")
+    public String asyncTest() throws Exception {
+        this.aopService.asyncTest();
+        return "";
     }
 
 }

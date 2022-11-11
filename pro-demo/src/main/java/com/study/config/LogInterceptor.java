@@ -26,11 +26,11 @@ public class LogInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        if(request.getHeader(traceId).isEmpty()){
+        //if(request.getHeader(traceId).isEmpty()){
             String traceId = UUID.randomUUID().toString().split("-")[4];
             MDC.put("traceId",traceId);
             log.info("traceId:{}",traceId);
-        }
+        //}
         return true;
     }
 
