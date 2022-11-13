@@ -70,4 +70,12 @@ public class AopController {
         return "";
     }
 
+    /**
+     * 异步方法异常测试
+     */
+    @GetMapping("asyncVoid")
+    public String asyncVoid() throws Exception {
+        this.aopService.asyncVoidTest();
+        return "";
+    }
 }

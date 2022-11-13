@@ -12,4 +12,6 @@ import org.springframework.stereotype.Service;
 public interface AopService {
 
     void asyncTest() throws Exception;
+
+    void asyncVoidTest() throws Exception;
 }
