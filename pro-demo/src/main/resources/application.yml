@@ -27,5 +27,5 @@ spring:
       ddl-auto: update
     open-in-view: false
   redis:
-    host: 124.221.161.153
-    password: root
+    host: 192.168.130.117
+    port: 7001

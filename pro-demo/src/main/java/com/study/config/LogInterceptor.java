@@ -1,6 +1,5 @@
 package com.study.config;
 
-import com.study.util.TraceIdUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
@@ -31,10 +30,10 @@ public class LogInterceptor implements HandlerInterceptor {
             bdfc 76b2 f3ac 860b
             tarceId: ip + date +  + pid
          */
-        String trace = TraceIdUtils.createTraceId().toString();
-        System.out.println("string = " + trace);
-            MDC.put(traceId,trace);
-            log.info("traceId:{}",trace);
+        //String trace = TraceIdUtils.createTraceId().toString();
+        //System.out.println("string = " + trace);
+        //    MDC.put(traceId,trace);
+        //    log.info("traceId:{}",trace);
         //}
         return true;
     }

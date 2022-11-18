@@ -5,12 +5,11 @@ import com.study.entity.Test;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * @description: redis控制层
@@ -42,5 +41,12 @@ public class RedisController {
         list.add(new Test("1", "li"));
         redisTemplate.boundListOps("s").leftPush(JSONUtil.toJsonStr(list));
         redisTemplate.opsForList();
+    }
+
+    @GetMapping("delete")
+    public void deleteTest(@RequestBody Map map){
+        Object key = map.get("key");
+        String s = key.toString();
+        this.stringRedisTemplate.delete(s);
     }
 }

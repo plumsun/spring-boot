@@ -4,16 +4,19 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
+import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Joiner;
-import com.study.entity.resp.RestResult;
 import com.study.entity.StatusType;
 import com.study.entity.Test;
 import com.study.entity.TestDemo;
+import com.study.entity.resp.RestResult;
 import org.apache.commons.lang.text.StrBuilder;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
+import java.util.function.Predicate;
+import java.util.regex.Pattern;
 
 /**
  * @description:
@@ -108,7 +111,17 @@ public class ExcelServiceImplTest {
     @org.junit.Test
     public void streamTest(){
         ArrayList<String> list = new ArrayList<>();
-        list.stream().filter(StrUtil::isEmpty).forEach(System.out::println);
+        list.add("1");
+        list.add("2");
     }
 
+    @org.junit.Test
+    public void subStrTest(){
+        String str = "123,";
+        String s = JSONObject.toJSONString(str);
+        System.out.println("s = " + s);
+        String substring = str.substring(0, 3);
+        String regEx =  ".*[\\s`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？\\\\]+.*";
+        Pattern p = Pattern.compile(regEx);
+    }
 }
