@@ -34,7 +34,7 @@ public class TaskConfig implements SchedulingConfigurer {
             String format = DateUtil.format(date, DatePattern.NORM_DATETIME_PATTERN);
             log.info("定时任务启动:{},时间:{},开始调用", cron, format);
             try {
-                this.oracleService.save(new ClCodShbesEntity());
+                this.oracleService.updateTime(new ClCodShbesEntity());
             } catch (Exception e) {
                 log.error("Task-Error",e);
             }
