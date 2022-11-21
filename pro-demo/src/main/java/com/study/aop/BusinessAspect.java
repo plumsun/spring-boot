@@ -2,21 +2,18 @@ package com.study.aop;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.support.spring.PropertyPreFilters;
+import com.study.util.TraceIdUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
 
 
 @Aspect
@@ -45,10 +42,18 @@ public class BusinessAspect {
     @Before("businessAuthenticationPointcut()")
     public void doBefore(JoinPoint joinPoint) throws Throwable {
         log.info("前置通知");
-        Object[] args = joinPoint.getArgs();
-        System.out.println("args = " + Arrays.toString(args));
+
+        //设置traceId
+        RequestAttributes attributes = RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = (HttpServletRequest) attributes.resolveReference(RequestAttributes.REFERENCE_REQUEST);
+        initTraceId(request);
         // 开始打印请求日志
-        print(joinPoint);
+        print(joinPoint,request);
+    }
+
+    private void initTraceId(HttpServletRequest request) {
+        String val = request.getHeader(TraceIdUtils.TRACE_ID);
+        if (val.isEmpty()) TraceIdUtils.setTraceId(TraceIdUtils.getTraceId());
     }
 
     /**
@@ -70,13 +75,19 @@ public class BusinessAspect {
         return rvt;
     }
 
+    @AfterThrowing(throwing = "(within(@org.springframework.web.bind.annotation.RestController *)" +
+                    " || within(@org.springframework.stereotype.Controller *))")
+    public Object afterThrow(JoinPoint joinPoint, Object rvt) {
+        log.info("后置通知");
+        String json = excludeParam(rvt);
+        if (!json.contains("\"flag\":\"T\"") && !json.contains("\"message\":\"Success\"")) {
+            log.info("--- AfterReturningResult: " + json);
+        }
+        return rvt;
+    }
 
-    public void print(JoinPoint point) {
-        // 开始打印请求日志
-        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest request = attributes.getRequest();
 
-
+    public void print(JoinPoint point,HttpServletRequest request) {
         // 打印请求相关参数
         log.info("========================================== Start ==========================================");
         // 打印请求 url

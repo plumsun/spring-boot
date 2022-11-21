@@ -19,11 +19,12 @@ public class DemoController {
 
     /**
      * 公用response测试
+     *
      * @return
      * @throws Exception
      */
     @PostMapping("result")
     public RestResult<Object> result() throws Exception {
-        return RestResult.T("成功");
+        return RestResult.success("成功");
     }
 }

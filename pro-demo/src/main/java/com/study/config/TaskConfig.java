@@ -16,6 +16,9 @@ import org.springframework.scheduling.support.CronTrigger;
 
 import java.util.Date;
 
+/**
+ * @author User
+ */
 @Configuration
 @EnableScheduling
 @EnableAsync
@@ -25,21 +28,21 @@ public class TaskConfig implements SchedulingConfigurer {
     @Autowired
     OracleService oracleService;
 
-    private String cron ="0 0/1 * * * ?";
+    private String cron = "0 0/1 * * * ?";
 
     @Override
     public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
-        taskRegistrar.addTriggerTask(() ->{
+        taskRegistrar.addTriggerTask(() -> {
             Date date = new Date();
             String format = DateUtil.format(date, DatePattern.NORM_DATETIME_PATTERN);
             log.info("定时任务启动:{},时间:{},开始调用", cron, format);
             try {
                 this.oracleService.updateTime(new ClCodShbesEntity());
             } catch (Exception e) {
-                log.error("Task-Error",e);
+                log.error("Task-Error", e);
             }
-            log.info( "定时任务调用完成,用时{}", DateUtil.between(date,new Date(), DateUnit.MS));
-        },triggerContext -> {
+            log.info("定时任务调用完成,用时{}", DateUtil.between(date, new Date(), DateUnit.MS));
+        }, triggerContext -> {
             return new CronTrigger(cron).nextExecutionTime(triggerContext);
         });
     }

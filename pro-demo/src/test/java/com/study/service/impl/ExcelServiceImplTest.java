@@ -2,7 +2,6 @@ package com.study.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Joiner;
@@ -15,7 +14,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
-import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
 /**
@@ -104,7 +102,7 @@ public class ExcelServiceImplTest {
     public void test3() {
         String statusType = StatusType.getInfoByCode("1");
         System.out.println(statusType);
-        RestResult chenggong = RestResult.T("chenggong");
+        RestResult chenggong = RestResult.success("chenggong");
         System.out.println("result = " + chenggong);
     }
 
