@@ -1,8 +1,9 @@
 package com.study.aop;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.support.spring.PropertyPreFilters;
-import com.study.util.TraceIdUtils;
+import com.study.utils.TraceIdUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
@@ -52,8 +53,9 @@ public class BusinessAspect {
     }
 
     private void initTraceId(HttpServletRequest request) {
-        String val = request.getHeader(TraceIdUtils.TRACE_ID);
-        if (val.isEmpty()) TraceIdUtils.setTraceId(TraceIdUtils.getTraceId());
+        if (ObjectUtil.isEmpty(request.getHeader(TraceIdUtils.TRACE_ID))) {
+            TraceIdUtils.setTraceId(TraceIdUtils.getTraceId());
+        }
     }
 
     /**
@@ -66,24 +68,21 @@ public class BusinessAspect {
     @AfterReturning(returning = "rvt",
             pointcut = "(within(@org.springframework.web.bind.annotation.RestController *)" +
                     " || within(@org.springframework.stereotype.Controller *))")
-    public Object afterExec(JoinPoint joinPoint, Object rvt) {
+    public void afterExec(JoinPoint joinPoint, Object rvt) {
         log.info("后置通知");
         String json = excludeParam(rvt);
         if (!json.contains("\"flag\":\"T\"") && !json.contains("\"message\":\"Success\"")) {
             log.info("--- AfterReturningResult: " + json);
         }
-        return rvt;
     }
 
-    @AfterThrowing(throwing = "(within(@org.springframework.web.bind.annotation.RestController *)" +
-                    " || within(@org.springframework.stereotype.Controller *))")
-    public Object afterThrow(JoinPoint joinPoint, Object rvt) {
-        log.info("后置通知");
-        String json = excludeParam(rvt);
+    @AfterThrowing(pointcut="execution(* com.study.*.*(..))",throwing = "e")
+    public void afterThrow(JoinPoint joinPoint, Throwable e) {
+        log.info("异常通知");
+        String json = excludeParam(e);
         if (!json.contains("\"flag\":\"T\"") && !json.contains("\"message\":\"Success\"")) {
             log.info("--- AfterReturningResult: " + json);
         }
-        return rvt;
     }
 
 

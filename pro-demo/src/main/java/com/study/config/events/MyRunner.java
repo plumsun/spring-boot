@@ -1,4 +1,4 @@
-package com.study.config;
+package com.study.config.events;
 
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;

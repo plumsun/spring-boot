@@ -1,4 +1,4 @@
-package com.study.util;
+package com.study.utils;
 
 import org.apache.axis.encoding.XMLType;
 import org.apache.axis.message.MessageElement;
@@ -19,7 +19,9 @@ import java.util.*;
  * @Version 1.0.0
  */
 @Component
-public class WebServiceClientU {
+public class WebServiceClientUs {
+
+
     public static Map<String, String> callWebSVDiff(String wsdUrl, String operationName, Object... params) throws Exception {
         Service service = new Service();
         Call call = (Call) service.createCall();

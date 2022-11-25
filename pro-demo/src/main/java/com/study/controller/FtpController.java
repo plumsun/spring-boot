@@ -4,6 +4,7 @@ import com.jcraft.jsch.*;
 import com.study.service.FtpService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPFile;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -54,11 +55,14 @@ public class FtpController {
     @GetMapping("connect")
     public String connect(@RequestParam String host,@RequestParam Integer port) throws IOException {
         FTPClient client = new FTPClient();
+        client.login("epadmin","easipass");
         client.connect(host, port);
         boolean connected = client.isConnected();
         System.out.println("connected = " + connected);
         if(client.isConnected()){
-            client.disconnect();
+            client.changeWorkingDirectory("/download");
+            FTPFile[] ftpFiles = client.listFiles();
+            System.out.println("ftpFiles = ");
             return "s";
         }else return "f";
     }

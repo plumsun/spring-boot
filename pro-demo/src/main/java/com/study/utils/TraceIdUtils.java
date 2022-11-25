@@ -1,4 +1,4 @@
-package com.study.util;
+package com.study.utils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
@@ -26,7 +26,7 @@ public class TraceIdUtils {
      * get traceId
      */
     public static String getTraceId()  {
-        return local.get().isEmpty()?createTraceId():local.get();
+        return local.get();
     }
 
     public static void setTraceId(String traceId)  {
@@ -67,6 +67,7 @@ public class TraceIdUtils {
         traceId.append(hex).append(System.currentTimeMillis()).append(split[0]);
         final String str = traceId.toString();
         log.info("traceId:{}", str);
+        return str;
     }
 
     private static String intToHex(String ip) {

@@ -1,6 +1,6 @@
-package com.study.config;
+package com.study.config.intercept;
 
-import com.study.util.TraceIdUtils;
+import com.study.utils.TraceIdUtils;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import org.springframework.stereotype.Service;

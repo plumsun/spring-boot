@@ -3,7 +3,7 @@ package com.study.service.impl;
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
 import com.study.service.FtpService;
-import com.study.util.WebServiceClientU;
+import com.study.utils.WebServiceClientUs;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +28,7 @@ public class FtpServiceImpl implements FtpService {
             Object containCert = map.get("containCert");
             Object ctnNo = map.get("ctnNo");
             Object containDate = map.get("containDate");
-            Map<String, String> result = WebServiceClientU.callWebSVDiff(requestUrl, "CheckBoxing",
+            Map<String, String> result = WebServiceClientUs.callWebSVDiff(requestUrl, "CheckBoxing",
                     containCert, ctnNo, containDate, DateUtil.format(new Date(), DatePattern.PURE_DATETIME_PATTERN));
         } catch (Exception e) {
             throw e;

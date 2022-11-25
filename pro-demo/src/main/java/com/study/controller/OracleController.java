@@ -42,8 +42,13 @@ public class OracleController {
      * @throws Exception
      */
     @PostMapping("save")
-    public String save(@RequestBody ClCodShbesEntity clCodShbes, HttpServletResponse response) throws Exception {
-        System.out.println("clCodShbes = " + clCodShbes);
-        return this.oracleService.save(clCodShbes);
+    public String save(@RequestBody ClCodShbesEntity clCodShbes, HttpServletResponse response) {
+        try {
+            System.out.println("clCodShbes = " + clCodShbes);
+            return this.oracleService.save(clCodShbes);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 }

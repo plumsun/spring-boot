@@ -116,6 +116,7 @@ public class OracleServiceImpl implements OracleService {
     @Override
     public String save(ClCodShbesEntity clCodShbes) {
         this.clCodShbesDao.save(clCodShbes);
+        int i = 1 / 0;
         return "s";
     }
 }

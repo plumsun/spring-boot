@@ -1,4 +1,4 @@
-package com.study.config;
+package com.study.job;
 
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUnit;
@@ -23,7 +23,7 @@ import java.util.Date;
 @EnableScheduling
 @EnableAsync
 @Slf4j
-public class TaskConfig implements SchedulingConfigurer {
+public class SpringTasks implements SchedulingConfigurer {
 
     @Autowired
     OracleService oracleService;

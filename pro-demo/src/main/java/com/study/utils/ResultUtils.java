@@ -1,4 +1,4 @@
-package com.study.util;
+package com.study.utils;
 
 import com.study.entity.resp.BaseErrorInfo;
 import com.study.entity.resp.RestResult;
@@ -9,7 +9,7 @@ import com.study.entity.resp.RestResult;
  * @author LiHaoHan
  * @date 2022/11/21
  */
-public class ResultUtil<T> {
+public class ResultUtils<T> {
 
 
     public static <T> RestResult<T> success(T data) {
@@ -17,7 +17,7 @@ public class ResultUtil<T> {
         restResult.setCode(200);
         restResult.setMessage("success");
         restResult.setData(data);
-        restResult.setTimestamp(DateUtil.currentMillisecondTimestamp());
+        restResult.setTimestamp(DateUtils.currentMillisecondTimestamp());
         return restResult;
     }
 
@@ -26,7 +26,7 @@ public class ResultUtil<T> {
         restResult.setCode(500);
         restResult.setMessage("error");
         restResult.setData(null);
-        restResult.setTimestamp(DateUtil.currentMillisecondTimestamp());
+        restResult.setTimestamp(DateUtils.currentMillisecondTimestamp());
         return restResult;
     }
 
@@ -35,7 +35,7 @@ public class ResultUtil<T> {
         restResult.setCode(500);
         restResult.setMessage("error");
         restResult.setData(data);
-        restResult.setTimestamp(DateUtil.currentMillisecondTimestamp());
+        restResult.setTimestamp(DateUtils.currentMillisecondTimestamp());
         return restResult;
     }
 
@@ -44,7 +44,7 @@ public class ResultUtil<T> {
         restResult.setCode(info.getResultCode());
         restResult.setMessage(info.getResultMsg());
         restResult.setData(null);
-        restResult.setTimestamp(DateUtil.currentMillisecondTimestamp());
+        restResult.setTimestamp(DateUtils.currentMillisecondTimestamp());
         return restResult;
     }
 
@@ -53,7 +53,7 @@ public class ResultUtil<T> {
         restResult.setCode(code);
         restResult.setMessage(msg);
         restResult.setData(null);
-        restResult.setTimestamp(DateUtil.currentMillisecondTimestamp());
+        restResult.setTimestamp(DateUtils.currentMillisecondTimestamp());
         return restResult;
     }
 
@@ -62,7 +62,7 @@ public class ResultUtil<T> {
         restResult.setCode(code);
         restResult.setMessage(msg);
         restResult.setData(data);
-        restResult.setTimestamp(DateUtil.currentMillisecondTimestamp());
+        restResult.setTimestamp(DateUtils.currentMillisecondTimestamp());
         return restResult;
     }
 

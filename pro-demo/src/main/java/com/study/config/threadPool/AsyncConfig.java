@@ -1,7 +1,5 @@
-package com.study.config;
+package com.study.config.threadPool;
 
-import com.study.exception.AsyncExceptionHandler;
-import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -24,15 +22,9 @@ public class AsyncConfig implements AsyncConfigurer {
         executor.setCorePoolSize(5);
         executor.setMaxPoolSize(5);
         executor.setQueueCapacity(100);
-        executor.setThreadNamePrefix("MyExecutor-");
+        executor.setThreadNamePrefix("My-AsyncThread-Executor-");
         executor.initialize();
         executor.setRejectedExecutionHandler(new ThreadPoolExecutor.AbortPolicy());
         return executor;
-    }
-
-
-    @Override
-    public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
-        return new AsyncExceptionHandler();
     }
 }
