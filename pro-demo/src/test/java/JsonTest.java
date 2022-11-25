@@ -1,8 +1,16 @@
 
+import com.study.App;
+import lombok.extern.slf4j.Slf4j;
 import net.sf.json.JSONObject;
+import net.sf.json.xml.XMLSerializer;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.*;
+import java.io.File;
+import java.util.Comparator;
+import java.util.Map;
 
 /**
  * @description:
@@ -10,7 +18,9 @@ import java.util.*;
  * @author: LiHaoHan
  * @program: PACKAGE_NAME
  */
-@SpringBootTest
+@Slf4j
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = App.class)
 public class JsonTest {
     @org.junit.Test
     public void test() {
@@ -47,10 +57,10 @@ public class JsonTest {
                 "}";
         JSONObject jsonObject = JSONObject.fromObject(str);
         String body = jsonObject.optString("body");
-        System.out.println("body = " + body);
+        log.info("body:{}",body);
         JSONObject jsonObject1 = JSONObject.fromObject(body);
         String data = jsonObject1.optString("data");
-        System.out.println("data = " + data);
+        log.info("data:{}",data);
     }
 
 
@@ -67,7 +77,17 @@ public class JsonTest {
             }
         }).forEach(System.out::println);
         String s = object.toJSONString();
-        System.out.println("s = " + s);
+        log.info(s);
     }
+
+    @Test
+    public void xmlToJson(){
+        XMLSerializer serializer = new XMLSerializer();
+        String json = serializer.readFromFile(new File("D:\\json.xml")).toString();
+        log.info(json);
+        com.study.entity.Test test = com.alibaba.fastjson.JSONObject.parseObject(json, com.study.entity.Test.class);
+        log.info("{}",test);
+    }
+
 
 }

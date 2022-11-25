@@ -2,15 +2,13 @@ package com.study.service;
 
 import com.study.entity.ClCodShbesEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 
 @Service
-public interface ExcelService{
+public interface OracleService {
 
     /**
      * 新增和修改的功能
@@ -50,9 +48,4 @@ public interface ExcelService{
      */
     String save(ClCodShbesEntity clCodShbes);
 
-
-    /**
-     * 远程调用
-     */
-    void rpc(Map<String,Object> map) throws Exception;
 }

@@ -1,0 +1,26 @@
+plugins {
+    id 'java'
+    id "org.springframework.boot" version "2.7.5"
+    id "io.spring.dependency-management" version "1.1.0"
+}
+group 'com.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    junitVersion = '5.8.1'
+}
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+dependencies {
+    implementation "cn.hutool:hutool-all:5.8.9"
+    implementation "com.alibaba:fastjson:1.2.83"
+    implementation 'org.mapstruct:mapstruct:1.5.3.Final'
+}

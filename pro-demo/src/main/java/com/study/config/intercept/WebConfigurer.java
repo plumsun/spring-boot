@@ -1,4 +1,4 @@
-package com.study.config;
+package com.study.config.intercept;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

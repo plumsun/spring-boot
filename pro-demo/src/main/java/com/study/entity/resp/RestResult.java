@@ -2,146 +2,87 @@ package com.study.entity.resp;
 
 
 /**
- * The type Rest result.
- *
- * @param <T> the type parameter
+ * @author User Response with single record to return
  */
-public class RestResult<T> extends SingleResponse<T> {
+public class RestResult<T> {
 
-    private static final long serialVersionUID = 3161850176095433538L;
-
-    /**
-     * The Code.
-     */
-    protected int code;
+    private static final long serialVersionUID = 1L;
 
     /**
-     * The Message.
+     * 响应结果
      */
-    protected String message;
-
-
+    private T data;
     /**
-     * Instantiates a new Rest result.
+     * 时间戳
      */
+    private String timestamp;
+    /**
+     * 响应代码
+     */
+    private Integer code;
+    /**
+     * 响应消息
+     */
+    private String message;
+
+
     public RestResult() {
+        System.out.println("SingleResponse");
     }
 
-    /**
-     * Instantiates a new Rest result.
-     *
-     * @param code    the code
-     * @param message the message
-     * @param data    the data
-     */
-    public RestResult(int code, String message, T data) {
-        this.code = code;
-        this.setMessage(message);
-        super.setData(data);
+    public RestResult(T data) {
+        this.data = data;
+        System.out.println("data = " + data);
     }
 
-    /**
-     * Instantiates a new Rest result.
-     *
-     * @param code the code
-     * @param data the data
-     */
-    public RestResult(int code, T data) {
-        this.code = code;
-        super.setData(data);
+    public static <T> RestResult<T> success(T data) {
+
+        return null;
     }
 
-    /**
-     * Instantiates a new Rest result.
-     *
-     * @param code    the code
-     * @param message the message
-     */
-    public RestResult(int code, String message) {
-        this.code = code;
-        this.setMessage(message);
+    public static <T> RestResult<T> err(T data) {
+        return null;
     }
 
-
-
-
-    /**
-     * T rest result.
-     *
-     * @param data the data
-     * @return the rest result
-     */
-    public static RestResult T(Object data){
-        RestResult restResult = new RestResult();
-        restResult.setCode(200);
-        restResult.setMessage("success");
-        restResult.setData(data);
-        System.out.println("T");
-        return restResult;
+    public T getData() {
+        return data;
     }
 
-    /**
-     * F rest result.
-     *
-     * @return the rest result
-     */
-    public static RestResult F(){
-        return new RestResult(500,"error");
+    public void setData(T data) {
+        this.data = data;
     }
 
-    /**
-     * Gets code.
-     *
-     * @return the code
-     */
-    public int getCode() {
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public Integer getCode() {
         return code;
     }
 
-    /**
-     * Sets code.
-     *
-     * @param code the code
-     */
-    public void setCode(int code) {
+    public void setCode(Integer code) {
         this.code = code;
     }
 
-    /**
-     * Gets message.
-     *
-     * @return the message
-     */
     public String getMessage() {
         return message;
     }
 
-    /**
-     * Sets message.
-     *
-     * @param message the message
-     */
     public void setMessage(String message) {
         this.message = message;
     }
 
-
-    /**
-     * Ok boolean.
-     *
-     * @return the boolean
-     */
-    public boolean ok() {
-        return this.code == 0 || this.code == 200;
-    }
-
     @Override
     public String toString() {
-        System.out.println("restResult.toString");
         return "RestResult{" +
-                "code=" + code +
+                "data=" + data +
+                ", timestamp='" + timestamp + '\'' +
+                ", code='" + code + '\'' +
                 ", message='" + message + '\'' +
-                ", data=" + data +
                 '}';
     }
 }

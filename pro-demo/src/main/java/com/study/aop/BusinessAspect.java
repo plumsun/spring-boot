@@ -1,22 +1,20 @@
 package com.study.aop;
 
-import cn.hutool.json.JSONUtil;
+import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.support.spring.PropertyPreFilters;
+import com.study.utils.TraceIdUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
 
 
 @Aspect
@@ -45,10 +43,19 @@ public class BusinessAspect {
     @Before("businessAuthenticationPointcut()")
     public void doBefore(JoinPoint joinPoint) throws Throwable {
         log.info("前置通知");
-        Object[] args = joinPoint.getArgs();
-        System.out.println("args = " + Arrays.toString(args));
+
+        //设置traceId
+        RequestAttributes attributes = RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = (HttpServletRequest) attributes.resolveReference(RequestAttributes.REFERENCE_REQUEST);
+        initTraceId(request);
         // 开始打印请求日志
-        print(joinPoint);
+        print(joinPoint,request);
+    }
+
+    private void initTraceId(HttpServletRequest request) {
+        if (ObjectUtil.isEmpty(request.getHeader(TraceIdUtils.TRACE_ID))) {
+            TraceIdUtils.setTraceId(TraceIdUtils.getTraceId());
+        }
     }
 
     /**
@@ -61,22 +68,25 @@ public class BusinessAspect {
     @AfterReturning(returning = "rvt",
             pointcut = "(within(@org.springframework.web.bind.annotation.RestController *)" +
                     " || within(@org.springframework.stereotype.Controller *))")
-    public Object afterExec(JoinPoint joinPoint, Object rvt) {
+    public void afterExec(JoinPoint joinPoint, Object rvt) {
         log.info("后置通知");
-        String s = JSONUtil.toJsonStr(rvt);
-        if (!s.contains("\"flag\":\"T\"") && !s.contains("\"message\":\"Success\"")) {
-            log.info("--- AfterReturningResult: " + s);
+        String json = excludeParam(rvt);
+        if (!json.contains("\"flag\":\"T\"") && !json.contains("\"message\":\"Success\"")) {
+            log.info("--- AfterReturningResult: " + json);
         }
-        return rvt;
+    }
+
+    @AfterThrowing(pointcut="execution(* com.study.*.*(..))",throwing = "e")
+    public void afterThrow(JoinPoint joinPoint, Throwable e) {
+        log.info("异常通知");
+        String json = excludeParam(e);
+        if (!json.contains("\"flag\":\"T\"") && !json.contains("\"message\":\"Success\"")) {
+            log.info("--- AfterReturningResult: " + json);
+        }
     }
 
 
-    public void print(JoinPoint point) {
-        // 开始打印请求日志
-        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest request = attributes.getRequest();
-
-
+    public void print(JoinPoint point,HttpServletRequest request) {
         // 打印请求相关参数
         log.info("========================================== Start ==========================================");
         // 打印请求 url
@@ -89,16 +99,7 @@ public class BusinessAspect {
         // 打印请求的 IP
         log.info("IP             : {}", request.getRemoteAddr());
         // 打印请求入参
-        String params = getParams(point);
-        System.out.println("params = " + params);
         log.info("Request Args   : {}", getParams(point));
-        // 排除字段，敏感字段或太长的字段不显示
-        //String[] excludeProperties = {"password", "file"};
-        //PropertyPreFilters filters = new PropertyPreFilters();
-        //PropertyPreFilters.MySimplePropertyPreFilter excludefilter = filters.addFilter();
-        //excludefilter.addExcludes(excludeProperties);
-        //log.info("请求参数: {}", JSONObject.toJSONString(params, excludefilter));
-        log.info("请求参数: {}", JSONObject.toJSONString(params));
     }
 
     /**
@@ -109,7 +110,6 @@ public class BusinessAspect {
      */
     private static String getParams(JoinPoint joinPoint) {
         Object[] args = joinPoint.getArgs();
-        System.out.println("args = " + Arrays.toString(args));
         StringBuilder params = new StringBuilder();
         if (args != null && args.length > 0) {
             for (Object arg : args) {
@@ -125,7 +125,21 @@ public class BusinessAspect {
                 }
             }
         }
-        System.out.println("params.toString() = " + params.toString());
         return params.toString();
+    }
+
+    /**
+     * 序列化String时排除出指定字段
+     * @param params body
+     * @return
+     */
+    private String excludeParam(Object params){
+        String[] excludeProperties = {"password", "file"};
+        PropertyPreFilters filters = new PropertyPreFilters();
+        PropertyPreFilters.MySimplePropertyPreFilter filter = filters.addFilter();
+        filter.addExcludes(excludeProperties);
+        String json = JSONObject.toJSONString(params, filter);
+        log.info("请求参数: {}",json);
+        return json;
     }
 }

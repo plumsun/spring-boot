@@ -1,4 +1,4 @@
-package com.study.util;
+package com.study.utils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -25,9 +25,9 @@ public class JsonUtils {
 
     /**
      * 序列化的时候的特性
-     *   DisableCircularReferenceDetect 消除对同一对象循环引用的问题，默认为false
-     *   SortField 按字段名称排序后输出。默认为false
-     *   WriteDateUseDateFormat 全局修改日期格式,默认为false。
+     * DisableCircularReferenceDetect 消除对同一对象循环引用的问题，默认为false
+     * SortField 按字段名称排序后输出。默认为false
+     * WriteDateUseDateFormat 全局修改日期格式,默认为false。
      */
     private static SerializerFeature[] serializerFeatures = {
             SerializerFeature.DisableCircularReferenceDetect,
@@ -37,7 +37,7 @@ public class JsonUtils {
 
     /**
      * 反序列化的时候的特性
-     *   OrderedField 属性保持原来的顺序
+     * OrderedField 属性保持原来的顺序
      */
     private static Feature[] features = {
             Feature.OrderedField
@@ -71,8 +71,8 @@ public class JsonUtils {
         return JSON.toJSONString(entity, serializerFeatures);
     }
 
-    public static <T> String beanToJsonWithDateFormat(T entity , String dateFormat) {
-        return JSON.toJSONStringWithDateFormat(entity, dateFormat , serializerFeatures);
+    public static <T> String beanToJsonWithDateFormat(T entity, String dateFormat) {
+        return JSON.toJSONStringWithDateFormat(entity, dateFormat, serializerFeatures);
     }
 
 
@@ -82,9 +82,8 @@ public class JsonUtils {
 
 
     public static <T> T beanToBean(Object entity, Class<T> clazz) {
-        return jsonToBean(beanToJson(entity) , clazz);
+        return jsonToBean(beanToJson(entity), clazz);
     }
-
 
 
     public static JSONArray jsonToArray(String json) {
@@ -92,17 +91,17 @@ public class JsonUtils {
     }
 
     public static <T> List<T> jsonToArray(String json, Class<T> clazz) {
-        return JSON.parseArray(json , clazz);
+        return JSON.parseArray(json, clazz);
     }
 
-    public static JSONArray beanToArray(Object entity){
+    public static JSONArray beanToArray(Object entity) {
         String jsonString = beanToJson(entity);
         return jsonToArray(jsonString);
     }
 
-    public static <T> List<T> beanToArray(Object entity, Class<T> clazz){
+    public static <T> List<T> beanToArray(Object entity, Class<T> clazz) {
         String jsonString = beanToJson(entity);
-        return jsonToArray(jsonString , clazz);
+        return jsonToArray(jsonString, clazz);
     }
 
     public static <T> T jsonToBeanWithException(String json, Class<T> clazz) {
@@ -117,9 +116,8 @@ public class JsonUtils {
     }
 
     public static JSON filePath2JSON(String filePath) throws IOException {
-        try(InputStream inputStream = JsonUtils.class.getClassLoader().getResourceAsStream(filePath)){
-            JSON jsonExpectedValue = (JSON) JSON.parse(IOUtils.toString(inputStream,DEFAULT_CHARSET));
-            return jsonExpectedValue;
+        try (InputStream inputStream = JsonUtils.class.getClassLoader().getResourceAsStream(filePath)) {
+            return (JSON) JSON.parse(IOUtils.toString(inputStream, DEFAULT_CHARSET));
         }
     }
 }
