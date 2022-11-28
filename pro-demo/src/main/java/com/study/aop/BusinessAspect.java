@@ -47,9 +47,9 @@ public class BusinessAspect {
         //设置traceId
         RequestAttributes attributes = RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = (HttpServletRequest) attributes.resolveReference(RequestAttributes.REFERENCE_REQUEST);
-        initTraceId(request);
         // 开始打印请求日志
         print(joinPoint,request);
+        initTraceId(request);
     }
 
     private void initTraceId(HttpServletRequest request) {

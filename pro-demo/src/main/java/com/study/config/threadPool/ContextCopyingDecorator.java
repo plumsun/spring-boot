@@ -29,13 +29,11 @@ public class ContextCopyingDecorator implements TaskDecorator {
         try {
             RequestAttributes context = RequestContextHolder.currentRequestAttributes();
             Map<String, String> previous = MDC.getCopyOfContextMap();
-            //3
             return () -> {
                 log.info("child thread traceId:{}", previous.get(TraceIdUtils.TRACE_ID));
                 try {
                     RequestContextHolder.setRequestAttributes(context);
                     MDC.setContextMap(previous);
-                    //3
                     runnable.run();
                 } finally {
                     log.error("thread error:{}", previous.get(TraceIdUtils.TRACE_ID));
