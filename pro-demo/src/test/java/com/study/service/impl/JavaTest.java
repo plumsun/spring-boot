@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author LiHaoHan
@@ -60,5 +61,28 @@ public class JavaTest {
 
     private void err(){
         int i=1/0;
+    }
+
+    @Test
+    public void threadTest(){
+       Runnable run =  new Runnable(){
+           @Override
+           public void run() {
+               
+           }
+       };
+    }
+}
+class MyThread extends Thread{
+
+    private volatile List list;
+
+    public MyThread(List list){
+        this.list =list;
+    }
+
+    @Override
+    public void run() {
+
     }
 }

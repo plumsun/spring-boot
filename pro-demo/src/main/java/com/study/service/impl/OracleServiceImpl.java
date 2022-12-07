@@ -2,6 +2,7 @@ package com.study.service.impl;
 
 import com.study.entity.ClCodShbesEntity;
 import com.study.exception.ResultBaseException;
+import com.study.repository.ClBizApplyDao;
 import com.study.repository.ClCodShbesDao;
 import com.study.service.OracleService;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +24,9 @@ public class OracleServiceImpl implements OracleService {
 
     @Autowired
     private OracleService oracleService;
+
+    @Autowired
+    private ClBizApplyDao clBizApplyDao;
 
     @Autowired
     private ClCodShbesDao clCodShbesDao;
@@ -118,5 +122,11 @@ public class OracleServiceImpl implements OracleService {
         this.clCodShbesDao.save(clCodShbes);
         int i = 1 / 0;
         return "s";
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void deleteFlag(Long id) {
+        this.clBizApplyDao.deleteById(id);
     }
 }

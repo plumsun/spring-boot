@@ -51,4 +51,15 @@ public class OracleController {
         }
         return null;
     }
+
+    /**
+     * 逻辑删除操作
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("delete/flag")
+    public void deleteFlag(@RequestParam Long id){
+        this.oracleService.deleteFlag(id);
+    }
 }

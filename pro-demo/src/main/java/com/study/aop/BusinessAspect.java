@@ -9,8 +9,6 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,17 +42,15 @@ public class BusinessAspect {
     public void doBefore(JoinPoint joinPoint) throws Throwable {
         log.info("前置通知");
 
-        //设置traceId
-        RequestAttributes attributes = RequestContextHolder.getRequestAttributes();
-        HttpServletRequest request = (HttpServletRequest) attributes.resolveReference(RequestAttributes.REFERENCE_REQUEST);
         // 开始打印请求日志
         print(joinPoint,request);
+        //设置traceId
         initTraceId(request);
     }
 
     private void initTraceId(HttpServletRequest request) {
         if (ObjectUtil.isEmpty(request.getHeader(TraceIdUtils.TRACE_ID))) {
-            TraceIdUtils.setTraceId(TraceIdUtils.getTraceId());
+            TraceIdUtils.setTraceId(TraceIdUtils.createTraceId());
         }
     }
 

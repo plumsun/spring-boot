@@ -25,16 +25,16 @@ public class TraceIdUtils {
     /**
      * get traceId
      */
-    public static String getTraceId()  {
+    public static String getTraceId() {
         return local.get();
     }
 
-    public static void setTraceId(String traceId)  {
-        if(traceId.isEmpty()){
+    public static void setTraceId(String traceId) {
+        if (traceId.isEmpty()) {
             traceId = createTraceId();
         }
         local.set(traceId);
-        MDC.put(TRACE_ID,traceId);
+        MDC.put(TRACE_ID, traceId);
     }
 
     /**
@@ -50,7 +50,7 @@ public class TraceIdUtils {
     /**
      * Create new traceId
      */
-    private static String createTraceId()  {
+    public static String createTraceId() {
         final StringBuilder traceId = new StringBuilder();
         //获取当前主机ip
         String localHost = null;

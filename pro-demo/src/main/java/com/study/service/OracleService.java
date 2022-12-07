@@ -4,7 +4,6 @@ import com.study.entity.ClCodShbesEntity;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.Map;
 
 
 @Service
@@ -48,4 +47,10 @@ public interface OracleService {
      */
     String save(ClCodShbesEntity clCodShbes);
 
+    /**
+     * 逻辑删除操作
+     * @param id
+     * @return
+     */
+    void deleteFlag(Long id);
 }
