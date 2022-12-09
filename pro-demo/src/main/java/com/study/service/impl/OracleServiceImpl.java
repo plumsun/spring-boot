@@ -8,7 +8,6 @@ import com.study.service.OracleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
@@ -62,7 +61,8 @@ public class OracleServiceImpl implements OracleService {
      * @return
      * @throws Exception
      */
-    @Transactional(propagation = Propagation.NOT_SUPPORTED)
+    //@Transactional(propagation = Propagation.NOT_SUPPORTED)
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public String update(HttpServletResponse response, Long id) throws Exception {
         try {
@@ -70,7 +70,7 @@ public class OracleServiceImpl implements OracleService {
             Optional<ClCodShbesEntity> optional = this.clCodShbesDao.findById(id);
             ClCodShbesEntity entity = optional.get();
             entity.setOperPlaceName("3");
-            oracleService.updateTime(entity);
+            this.updateTime1(entity);
             return str;
         } catch (Exception e) {
             log.error("error",e);
@@ -94,6 +94,12 @@ public class OracleServiceImpl implements OracleService {
         int i = 1 / 0;
     }
 
+    private void updateTime1(ClCodShbesEntity entity) throws Exception {
+        entity.setUpdateTime(new Date());
+        this.clCodShbesDao.save(entity);
+        int i = 1 / 0;
+    }
+
     /**
      * 更新数据
      * @param entity
@@ -104,7 +110,7 @@ public class OracleServiceImpl implements OracleService {
     public void updateData(ClCodShbesEntity entity) throws Exception {
         try {
             entity.setOperPlaceName("外高桥3期");
-            this.clCodShbesDao.save(entity);
+            this.save(entity);
         } catch (Exception e) {
             log.error("error",e);
             throw new RuntimeException();

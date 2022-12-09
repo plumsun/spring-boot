@@ -1,0 +1,33 @@
+server:
+  port: 8090
+
+spring:
+  application:
+    name: api-demo
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+  servlet:
+    multipart:
+      max-file-size: 10240MB  #单个文件大小限制
+      max-request-size: 10240MB #总文件大小限制（允许存储文件的文件夹大小）
+  redis:
+    host: 192.168.130.117
+    port: 7001
+
+mybatis-plus:
+  configuration:
+    cache-enabled: false
+    map-underscore-to-camel-case: true
+  typeAliasesPackage: com.demo.entity
+  global-config:
+    field-strategy: 0
+    db-column-underline: true
+    refresh-mapper: true
+    id-type: 0
+
+#定时任务
+task:
+  cron: 0 0/15 * * * ?
