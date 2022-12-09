@@ -17,6 +17,17 @@ spring:
     host: 192.168.130.117
     port: 7001
 
+mybatis-plus:
+  configuration:
+    cache-enabled: false
+    map-underscore-to-camel-case: true
+  typeAliasesPackage: com.demo.entity
+  global-config:
+    field-strategy: 0
+    db-column-underline: true
+    refresh-mapper: true
+    id-type: 0
+
 #定时任务
 task:
   cron: 0 0/15 * * * ?
