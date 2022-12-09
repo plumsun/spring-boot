@@ -7,6 +7,7 @@ import com.study.entity.ClCodShbesEntity;
 import com.study.service.OracleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -28,7 +29,8 @@ public class SpringTasks implements SchedulingConfigurer {
     @Autowired
     OracleService oracleService;
 
-    private String cron = "0 0/1 * * * ?";
+    @Value("${task.cron}")
+    private String cron;
 
     @Override
     public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {

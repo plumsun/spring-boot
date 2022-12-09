@@ -33,7 +33,7 @@
     <appender name="FILE1" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 输出文件路径+文件名 -->
-            <fileNamePattern>${CATALINA_BASE}/aa.%d{yyyyMMdd}.log</fileNamePattern>
+            <fileNamePattern>${LOG_HOME}/aa.%d{yyyyMMdd}.log</fileNamePattern>
             <!-- 保存30天的日志 -->
             <maxHistory>30</maxHistory>
         </rollingPolicy>
@@ -43,10 +43,10 @@
         </encoder>
     </appender>
     <appender name="CUSTOM" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${CATALINA_BASE}/custom.log</file>
+        <file>${LOG_HOME}/custom.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- daily rollover -->
-            <fileNamePattern>${CATALINA_BASE}/custom.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${LOG_HOME}/custom.%d{yyyy-MM-dd}.log</fileNamePattern>
             <!-- keep 30 days' worth of history -->
             <maxHistory>30</maxHistory>
         </rollingPolicy>
