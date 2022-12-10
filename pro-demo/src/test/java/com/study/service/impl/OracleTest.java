@@ -1,5 +1,6 @@
 package com.study.service.impl;
 
+import com.study.entity.ClBizApplyEntity;
 import com.study.repository.ClBizApplyDao;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -27,9 +28,24 @@ public class OracleTest {
         System.out.println("entity:" + this.clBizApplyDao.findById(408L));
     }
 
+    /**
+     * 测试@Delete逻辑删除
+     */
     @Transactional(rollbackFor = Exception.class)
     @Test
     public void deleteFlagTest() {
         this.clBizApplyDao.deleteById(408L);
+    }
+
+    /**
+     * 测试@Column注解
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Test
+    public void saveTest(){
+        ClBizApplyEntity entity = new ClBizApplyEntity();
+        entity.setDeleteFlag("12");
+        ClBizApplyEntity save = clBizApplyDao.save(entity);
+        System.out.println("save = " + save);
     }
 }

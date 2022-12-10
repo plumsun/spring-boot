@@ -1,5 +1,7 @@
 package com.study.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
+import com.study.entity.ClBizApplyEntity;
 import com.study.entity.ClCodShbesEntity;
 import com.study.exception.ResultBaseException;
 import com.study.repository.ClBizApplyDao;
@@ -132,7 +134,21 @@ public class OracleServiceImpl implements OracleService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
+    public String save(ClBizApplyEntity entity) {
+        ClBizApplyEntity save = this.clBizApplyDao.save(entity);
+        return JSONObject.toJSONString(save);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
     public void deleteFlag(Long id) {
         this.clBizApplyDao.deleteById(id);
+    }
+
+    @Override
+    public String findData(Long id) {
+        Optional<ClBizApplyEntity> optional = this.clBizApplyDao.findById(id);
+        ClBizApplyEntity clBizApplyEntity = optional.get();
+        return JSONObject.toJSONString(clBizApplyEntity);
     }
 }

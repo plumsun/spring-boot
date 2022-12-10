@@ -1,5 +1,6 @@
 package com.study.service;
 
+import com.study.entity.ClBizApplyEntity;
 import com.study.entity.ClCodShbesEntity;
 import org.springframework.stereotype.Service;
 
@@ -48,9 +49,21 @@ public interface OracleService {
     String save(ClCodShbesEntity clCodShbes);
 
     /**
+     * 保存数据
+     * @param entity
+     * @return
+     */
+    String save(ClBizApplyEntity entity);
+
+    /**
      * 逻辑删除操作
      * @param id
      * @return
      */
     void deleteFlag(Long id);
+
+    /**
+     *
+     */
+    String findData(Long id);
 }
