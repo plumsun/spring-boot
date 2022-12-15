@@ -14,7 +14,8 @@ import org.springframework.stereotype.Component;
 public class MyListen implements ApplicationListener<ContextStartedEvent> {
     @Override
     public void onApplicationEvent(ContextStartedEvent event) {
-        if (event.getApplicationContext().getParent() == null) {//保证只执行一次
+        //保证只执行一次
+        if (event.getApplicationContext().getParent() == null) {
             System.out.println("初始化完毕");
         }
     }
