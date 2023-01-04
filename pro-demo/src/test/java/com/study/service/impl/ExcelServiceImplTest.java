@@ -8,7 +8,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Joiner;
 import com.study.entity.StatusType;
 import com.study.entity.Test;
-import com.study.entity.TestDemo;
 import com.study.entity.resp.RestResult;
 import com.study.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -92,9 +91,6 @@ public class ExcelServiceImplTest {
         map.put("data", "data");
         map.put("pk", "1");
         System.out.println("map = " + map);
-        TestDemo testDemo = new TestDemo();
-        testDemo.setId("1");
-        testDemo.setObj(map);
         return map;
     }
 

@@ -9,7 +9,7 @@ import com.study.entity.resp.RestResult;
  * @author LiHaoHan
  * @date 2022/11/21
  */
-public class ResultUtils<T> {
+public class ResultUtils {
 
 
     public static <T> RestResult<T> success(T data) {
@@ -17,6 +17,14 @@ public class ResultUtils<T> {
         restResult.setCode(200);
         restResult.setMessage("success");
         restResult.setData(data);
+        restResult.setTimestamp(DateUtils.currentMillisecondTimestamp());
+        return restResult;
+    }
+    public static <T> RestResult<T> success() {
+        RestResult<T> restResult = new RestResult<T>();
+        restResult.setCode(200);
+        restResult.setMessage("success");
+        restResult.setData(null);
         restResult.setTimestamp(DateUtils.currentMillisecondTimestamp());
         return restResult;
     }
