@@ -57,10 +57,10 @@ public class ObjectUtils {
      *
      * @param obj
      */
-    public static <T> RestResult<?> validate(T obj) {
+    public static  RestResult validate(Object obj) {
         try {
             Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
-            Set<ConstraintViolation<T>> validate = validator.validate(obj, Default.class);
+            Set<ConstraintViolation<Object>> validate = validator.validate(obj, Default.class);
             HashMap<String, String> map = new HashMap<>(validate.size());
             validate.forEach(constraintViolation ->
                     map.put(constraintViolation.getPropertyPath().toString(),

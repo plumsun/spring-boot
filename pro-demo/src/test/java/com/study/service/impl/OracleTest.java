@@ -1,9 +1,6 @@
 package com.study.service.impl;
 
-import com.alibaba.fastjson.JSONObject;
-import com.study.entity.resp.RestResult;
 import com.study.repository.ClBizApplyDao;
-import com.study.utils.ObjectUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,13 +35,5 @@ public class OracleTest {
     @Test
     public void deleteFlagTest() {
         this.clBizApplyDao.deleteById(408L);
-    }
-
-    @Test
-    public void objFieldTest() {
-        com.study.entity.Test test = new com.study.entity.Test();
-        RestResult<?> result = ObjectUtils.validate(test);
-        String s = JSONObject.toJSONString(result);
-        System.out.println("s = " + s);
     }
 }

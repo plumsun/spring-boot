@@ -4,14 +4,14 @@ package com.study.entity.resp;
 /**
  * @author User Response with single record to return
  */
-public class RestResult<T> {
+public class RestResult {
 
     private static final long serialVersionUID = 1L;
 
     /**
      * 响应结果
      */
-    private T data;
+    private Object data;
     /**
      * 时间戳
      */
@@ -27,28 +27,18 @@ public class RestResult<T> {
 
 
     public RestResult() {
-        System.out.println("SingleResponse");
+
     }
 
-    public RestResult(T data) {
+    public RestResult(Object data) {
         this.data = data;
-        System.out.println("data = " + data);
     }
 
-    public static <T> RestResult<T> success(T data) {
-
-        return null;
-    }
-
-    public static <T> RestResult<T> err(T data) {
-        return null;
-    }
-
-    public T getData() {
+    public Object getData() {
         return data;
     }
 
-    public void setData(T data) {
+    public void setData(Object data) {
         this.data = data;
     }
 
