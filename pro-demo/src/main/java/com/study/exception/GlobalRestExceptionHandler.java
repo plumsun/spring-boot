@@ -1,5 +1,7 @@
 package com.study.exception;
 
+import com.study.entity.resp.RestResult;
+import com.study.utils.ResultUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,8 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 全局的异常处理类
@@ -24,19 +24,12 @@ public class GlobalRestExceptionHandler {
 
     @ExceptionHandler(value = Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public String easiBaseSysExceptionHandler(HttpServletResponse response, Exception e) {
-        log.error("GlobalExceptionHandler...",e);
-        return e.getMessage();
+    public RestResult easiBaseSysExceptionHandler(HttpServletResponse response, Exception e) {
+        return ResultUtils.err(e.getMessage());
     }
 
     @ExceptionHandler(value = ResultBaseException.class)
-    public Map<String, Object> sExceptionHandler(HttpServletResponse response, ResultBaseException e) {
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("status","f");
-        map.put("data",null);
-        map.put("code",e.getCode());
-        map.put("msg",e.getBizMessage());
-        log.error("GlobalExceptionHandler...",e);
-        return map;
+    public RestResult sExceptionHandler(HttpServletResponse response, ResultBaseException e) {
+        return ResultUtils.of(e.code, e.bizMessage);
     }
 }

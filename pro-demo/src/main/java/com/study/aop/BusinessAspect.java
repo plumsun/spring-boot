@@ -75,6 +75,7 @@ public class BusinessAspect {
     @AfterThrowing(pointcut="execution(* com.study.*.*(..))",throwing = "e")
     public void afterThrow(JoinPoint joinPoint, Throwable e) {
         log.info("异常通知");
+        log.error("GlobalExceptionHandler...",e);
         String json = excludeParam(e);
         if (!json.contains("\"flag\":\"T\"") && !json.contains("\"message\":\"Success\"")) {
             log.info("--- AfterReturningResult: " + json);

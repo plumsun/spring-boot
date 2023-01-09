@@ -1,6 +1,7 @@
 package com.study.controller;
 
 import com.study.entity.resp.RestResult;
+import com.study.utils.ResultUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +25,7 @@ public class DemoController {
      * @throws Exception
      */
     @PostMapping("result")
-    public RestResult<Object> result() throws Exception {
-        return RestResult.success("成功");
+    public RestResult result() throws Exception {
+        return ResultUtils.success("成功");
     }
 }

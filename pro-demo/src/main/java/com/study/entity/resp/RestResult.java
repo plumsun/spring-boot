@@ -1,54 +1,48 @@
 package com.study.entity.resp;
 
 
+import com.alibaba.fastjson2.JSONObject;
+import com.study.utils.DateUtils;
+
 /**
  * @author User Response with single record to return
  */
-public class RestResult<T> {
+public class RestResult {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * 响应结果
-     */
-    private T data;
-    /**
-     * 时间戳
-     */
-    private String timestamp;
     /**
      * 响应代码
      */
     private Integer code;
     /**
+     * 时间戳
+     */
+    private String timestamp;
+    /**
      * 响应消息
      */
     private String message;
+    /**
+     * 响应数据
+     */
+    private Object data;
 
 
     public RestResult() {
-        System.out.println("SingleResponse");
+        this.timestamp = DateUtils.currentMillisecondTimestamp();
     }
 
-    public RestResult(T data) {
+    public RestResult(Object data) {
         this.data = data;
-        System.out.println("data = " + data);
+        this.timestamp = DateUtils.currentMillisecondTimestamp();
     }
 
-    public static <T> RestResult<T> success(T data) {
-
-        return null;
-    }
-
-    public static <T> RestResult<T> err(T data) {
-        return null;
-    }
-
-    public T getData() {
+    public Object getData() {
         return data;
     }
 
-    public void setData(T data) {
+    public void setData(Object data) {
         this.data = data;
     }
 
@@ -78,11 +72,6 @@ public class RestResult<T> {
 
     @Override
     public String toString() {
-        return "RestResult{" +
-                "data=" + data +
-                ", timestamp='" + timestamp + '\'' +
-                ", code='" + code + '\'' +
-                ", message='" + message + '\'' +
-                '}';
+        return JSONObject.toJSONString(this);
     }
 }
