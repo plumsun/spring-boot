@@ -31,6 +31,5 @@ public class WaterMarkEntity {
     private BaseColor color;
 
     /*-----------------------------------------图片-------------------------------------------------*/
-    // TODO: 2023/1/6
     private Image image;
 }

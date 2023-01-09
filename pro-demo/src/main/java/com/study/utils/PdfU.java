@@ -1,9 +1,8 @@
 package com.study.utils;
 
-import com.itextpdf.text.Document;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Image;
-import com.itextpdf.text.PageSize;
+import cn.hutool.core.util.StrUtil;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfGState;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -57,24 +56,35 @@ public class PdfU {
      *
      * @param htmlStr   html
      * @param out       输出流
-     * @param imagePath 水印图片
      * @throws Exception
      */
-    public void generatePdfPlus(String htmlStr, OutputStream out, String imagePath) throws Exception {
+    public void generatePdfPlus(String htmlStr, OutputStream out) throws Exception {
         Document document = new Document(PageSize.A4, 30, 30, 30, 30);
         PdfWriter writer = PdfWriter.getInstance(document, out);
         document.open();
         //页码
         //document.setPageCount(2);
         XMLWorkerHelper helper = XMLWorkerHelper.getInstance();
+
+        /*//若是需要采用特殊字体，需要手动注册
+        XMLWorkerFontProvider fontProvider = new XMLWorkerFontProvider();
+        //注册字体
+        fontProvider.register("*.ttf");
+        Set<String> fonts = fontProvider.getRegisteredFonts();
+        log.info("默认注册的字体：{}",fonts);*/
+
+        //注册外部css文件
+        //helper.getDefaultCssResolver(true).addCssFile("*.css",true);
+
         //xml解析
         helper.parseXHtml(
                 writer,
                 document,
                 new ByteArrayInputStream(htmlStr.getBytes(CHARACTER)),
                 CHARACTER);
-        this.textWaterMark(writer,new WaterMarkEntity(),"");
-        this.imgWaterMark(writer,new WaterMarkEntity(),"");
+        WaterMarkEntity waterMark = buildWaterMark(BaseFont.createFont(), BaseColor.RED, "text", null);
+        //this.textWaterMark(writer, waterMark);
+        //this.imgWaterMark(writer, waterMark);
         document.close();
     }
 
@@ -83,9 +93,8 @@ public class PdfU {
      *
      * @param writer
      * @param builder
-     * @param text
      */
-    public void textWaterMark(PdfWriter writer, WaterMarkEntity builder, String text) {
+    public void textWaterMark(PdfWriter writer, WaterMarkEntity builder) {
         //文本水印
         PdfGState state = new PdfGState();
         ////设置透明度
@@ -97,7 +106,8 @@ public class PdfU {
         content.setColorFill(builder.getColor());
         ////文本水印位置
         content.setFontAndSize(builder.getFont(), builder.getFontSize());
-        content.showTextAligned(Element.ALIGN_CENTER, text, builder.getX(), builder.getY(), builder.getRotation());
+        content.showTextAligned(Element.ALIGN_CENTER, builder.getText(), builder.getX(), builder.getY(), builder.getRotation());
+        log.info("添加文字水印");
         content.endText();
     }
 
@@ -106,31 +116,58 @@ public class PdfU {
      *
      * @param writer
      * @param builder
-     * @param imagePath
      * @throws Exception
      */
-    public void imgWaterMark(PdfWriter writer, WaterMarkEntity builder, String imagePath) throws Exception {
+    public void imgWaterMark(PdfWriter writer, WaterMarkEntity builder) throws Exception {
         PdfGState state = new PdfGState();
-        Image image = Image.getInstance(imagePath);
-        ////设置图片的位置
-        image.setAbsolutePosition(builder.getX(), builder.getY());
-        ////设置图片的大小
-        image.scaleAbsolute(240, 140);
-        // 设置旋转弧度
-        image.setRotation(30);
-        // 设置旋转角度
-        image.setRotationDegrees(45);
-        // 设置等比缩放
-        image.scalePercent(90);
         //设置透明度
         state.setFillOpacity(builder.getFillOpacity());
-
         PdfContentByte content = writer.getDirectContent();
         content.beginText();
         //添加图片
-        content.addImage(image);
+        content.addImage(builder.getImage());
         content.setGState(state);
-
+        log.info("添加图片水印");
         content.endText();
     }
+
+    /**
+     * 构建水印对象
+     *
+     * @param font      字体
+     * @param color     颜色
+     * @param text      文本
+     * @param imagePath 图片路径
+     * @return
+     * @throws Exception
+     */
+    public WaterMarkEntity buildWaterMark(BaseFont font, BaseColor color, String text, String imagePath) throws Exception {
+        WaterMarkEntity waterMark = new WaterMarkEntity();
+        waterMark.setFillOpacity(0.4f);
+        waterMark.setX(200);
+        waterMark.setY(300);
+        waterMark.setRotation(10);
+        waterMark.setFontSize(20);
+        waterMark.setText(text);
+        waterMark.setFont(font);
+        waterMark.setColor(color);
+        Image image = null;
+        if (StrUtil.isNotEmpty(imagePath)) {
+            image = Image.getInstance(imagePath);
+            //设置图片的位置
+            image.setAbsolutePosition(waterMark.getX(), waterMark.getY());
+            //设置图片的大小
+            image.scaleAbsolute(240, 140);
+            // 设置旋转弧度
+            image.setRotation(waterMark.getRotation());
+            // 设置旋转角度
+            image.setRotationDegrees(45);
+            // 设置等比缩放
+            image.scalePercent(90);
+        }
+        waterMark.setImage(image);
+        return waterMark;
+    }
+
+
 }

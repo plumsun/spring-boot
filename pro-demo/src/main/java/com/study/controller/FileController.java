@@ -1,8 +1,7 @@
 package com.study.controller;
 
-import com.study.entity.resp.RestResult;
+import com.study.utils.HttpUtils;
 import com.study.utils.PdfU;
-import com.study.utils.ResultUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,7 +9,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.io.FileOutputStream;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,16 +32,12 @@ public class FileController {
 
 
     @GetMapping("/toPDF")
-    public RestResult createPDF(@RequestParam String name)  {
+    public void createPDF(@RequestParam String name, HttpServletResponse response) throws Exception {
         Map<String, Object> map = new HashMap<>();
-        map.put("name",name);
-        try {
-            String html = pdfU.generateHtml("test.ftl", map);
-            pdfU.generatePdfPlus(html,new FileOutputStream("D:\\test.pdf"),null);
-            return ResultUtils.success();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResultUtils.err();
-        }
+        map.put("name", name);
+        String html = pdfU.generateHtml("test.ftl", map);
+        HttpServletResponse resp = HttpUtils.buildPdfResp(response);
+        ServletOutputStream outputStream = resp.getOutputStream();
+        pdfU.generatePdfPlus(html, outputStream);
     }
 }

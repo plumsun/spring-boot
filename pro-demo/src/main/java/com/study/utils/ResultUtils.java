@@ -17,7 +17,6 @@ public class ResultUtils {
         restResult.setCode(200);
         restResult.setMessage("success");
         restResult.setData(data);
-        restResult.setTimestamp(DateUtils.currentMillisecondTimestamp());
         return restResult;
     }
     public static  RestResult success() {
@@ -25,7 +24,6 @@ public class ResultUtils {
         restResult.setCode(200);
         restResult.setMessage("success");
         restResult.setData(null);
-        restResult.setTimestamp(DateUtils.currentMillisecondTimestamp());
         return restResult;
     }
 
@@ -34,7 +32,6 @@ public class ResultUtils {
         restResult.setCode(500);
         restResult.setMessage("error");
         restResult.setData(null);
-        restResult.setTimestamp(DateUtils.currentMillisecondTimestamp());
         return restResult;
     }
 
@@ -43,7 +40,14 @@ public class ResultUtils {
         restResult.setCode(500);
         restResult.setMessage("error");
         restResult.setData(data);
-        restResult.setTimestamp(DateUtils.currentMillisecondTimestamp());
+        return restResult;
+    }
+
+    public static  RestResult err(String msg) {
+        RestResult restResult = new RestResult();
+        restResult.setCode(500);
+        restResult.setMessage(msg);
+        restResult.setData(null);
         return restResult;
     }
 
@@ -52,7 +56,6 @@ public class ResultUtils {
         restResult.setCode(info.getResultCode());
         restResult.setMessage(info.getResultMsg());
         restResult.setData(null);
-        restResult.setTimestamp(DateUtils.currentMillisecondTimestamp());
         return restResult;
     }
 
@@ -61,7 +64,6 @@ public class ResultUtils {
         restResult.setCode(code);
         restResult.setMessage(msg);
         restResult.setData(null);
-        restResult.setTimestamp(DateUtils.currentMillisecondTimestamp());
         return restResult;
     }
 
@@ -70,7 +72,6 @@ public class ResultUtils {
         restResult.setCode(code);
         restResult.setMessage(msg);
         restResult.setData(data);
-        restResult.setTimestamp(DateUtils.currentMillisecondTimestamp());
         return restResult;
     }
 
