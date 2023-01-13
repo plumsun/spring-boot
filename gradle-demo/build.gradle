@@ -20,7 +20,7 @@ tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
 dependencies {
-    implementation "cn.hutool:hutool-all:5.8.9"
-    implementation "com.alibaba:fastjson:1.2.83"
+    implementation 'cn.hutool:hutool-all:5.8.11'
+    implementation 'com.alibaba:fastjson:2.0.22'
     implementation 'org.mapstruct:mapstruct:1.5.3.Final'
 }

@@ -19,8 +19,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
-        <mybatis.version>3.5.2</mybatis.version>
-        <hutool.version>5.8.10</hutool.version>
+        <mybatis.version>3.5.3.1</mybatis.version>
+        <hutool.version>5.8.11</hutool.version>
         <commons-io.version>2.11.0</commons-io.version>
         <commons-discovery.version>0.5</commons-discovery.version>
         <mapstruct.version>1.5.3.Final</mapstruct.version>
