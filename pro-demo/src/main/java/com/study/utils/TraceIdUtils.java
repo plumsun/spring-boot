@@ -21,6 +21,10 @@ public class TraceIdUtils {
 
     private static final ThreadLocal<String> local = new ThreadLocal<>();
 
+    private TraceIdUtils() {
+        throw new IllegalStateException("Utility class");
+    }
+
 
     /**
      * get traceId
@@ -55,7 +59,7 @@ public class TraceIdUtils {
         //获取当前主机ip
         String localHost = null;
         try {
-            localHost = InetAddress.getLocalHost().getHostAddress().replaceAll("\\.", "");
+            localHost = InetAddress.getLocalHost().getHostAddress().replace("\\.", "");
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }

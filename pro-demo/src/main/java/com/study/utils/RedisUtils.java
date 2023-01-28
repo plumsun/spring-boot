@@ -15,6 +15,10 @@ import java.util.concurrent.TimeUnit;
 @Repository
 public class RedisUtils {
 
+    private RedisUtils() {
+        throw new IllegalStateException("Utility class");
+    }
+
     @Autowired
     private StringRedisTemplate redisTemplate;
 

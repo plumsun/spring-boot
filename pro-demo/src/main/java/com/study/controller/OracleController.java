@@ -1,5 +1,6 @@
 package com.study.controller;
 
+import com.study.entity.ClBizApplyEntity;
 import com.study.entity.ClCodShbesEntity;
 import com.study.service.OracleService;
 import lombok.extern.slf4j.Slf4j;
@@ -41,7 +42,7 @@ public class OracleController {
      * @return
      * @throws Exception
      */
-    @PostMapping("save")
+    @PostMapping("saveShip")
     public String save(@RequestBody ClCodShbesEntity clCodShbes, HttpServletResponse response) {
         try {
             System.out.println("clCodShbes = " + clCodShbes);
@@ -50,6 +51,28 @@ public class OracleController {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * 保存数据
+     * @param entity
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("saveApply")
+    public String saveApply(@RequestBody ClBizApplyEntity entity, HttpServletResponse response) {
+        try {
+            return this.oracleService.save(entity);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @GetMapping("getData")
+    public String getData(@RequestParam Long id, HttpServletResponse response) {
+        return this.oracleService.findData(id);
     }
 
     /**

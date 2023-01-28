@@ -11,6 +11,10 @@ import com.study.entity.resp.RestResult;
  */
 public class ResultUtils {
 
+    private ResultUtils() {
+        throw new IllegalStateException("Utility class");
+    }
+
 
     public static  RestResult success(Object data) {
         RestResult restResult = new RestResult();

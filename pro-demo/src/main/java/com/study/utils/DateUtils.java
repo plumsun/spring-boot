@@ -10,6 +10,10 @@ import java.time.temporal.ChronoUnit;
  */
 public class DateUtils {
 
+    private DateUtils() {
+        throw new IllegalStateException("Utility class");
+    }
+
     /**
      * 获取当前系统时间戳
      *

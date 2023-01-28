@@ -24,6 +24,11 @@ import java.util.Set;
 public class ObjectUtils {
 
 
+    private ObjectUtils() {
+        throw new IllegalStateException("Utility class");
+    }
+
+
     /**
      * 校验当前类中属性值是否符合要求
      *

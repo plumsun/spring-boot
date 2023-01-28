@@ -31,6 +31,10 @@ public class PdfU {
     @Resource
     FreeMarkerConfigurer configurer;
 
+    private PdfU() {
+        throw new IllegalStateException("Utility class");
+    }
+
     /**
      * 根据模版绑定数据后生成html字符串
      *

@@ -9,6 +9,9 @@ import java.nio.charset.StandardCharsets;
  */
 public class StringUtils {
 
+    private StringUtils() {
+        throw new IllegalStateException("Utility class");
+    }
 
     /**
      * 如果字节数大于1，是汉字以这种方式区别英文字母和中文汉字并不是十分严谨，但在这个题目中，这样判断已经足够了
