@@ -11,6 +11,10 @@ import java.net.URLEncoder;
  */
 public class HttpUtils {
 
+    private HttpUtils() {
+        throw new IllegalStateException("Utility class");
+    }
+
 
 
     public static HttpServletResponse buildPdfResp(HttpServletResponse response) throws UnsupportedEncodingException {

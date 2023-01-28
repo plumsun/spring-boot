@@ -23,6 +23,11 @@ public class JsonUtils {
     private final static String JSON_SEPERATOR = "%JS%";
     public static final String DEFAULT_CHARSET = "UTF-8";
 
+
+    private JsonUtils() {
+        throw new IllegalStateException("Utility class");
+    }
+
     /**
      * 序列化的时候的特性
      * DisableCircularReferenceDetect 消除对同一对象循环引用的问题，默认为false
