@@ -8,6 +8,7 @@ import com.itextpdf.text.pdf.PdfGState;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.tool.xml.XMLWorkerHelper;
 import com.study.entity.pdf.WaterMarkEntity;
+import freemarker.template.Configuration;
 import freemarker.template.Template;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -31,10 +32,6 @@ public class PdfU {
     @Resource
     FreeMarkerConfigurer configurer;
 
-    private PdfU() {
-        throw new IllegalStateException("Utility class");
-    }
-
     /**
      * 根据模版绑定数据后生成html字符串
      *
@@ -44,10 +41,11 @@ public class PdfU {
      * @throws Exception
      */
     public String generateHtml(String templateName, Map<String, Object> paramMap) throws Exception {
-        Template template = configurer.getConfiguration().getTemplate(templateName);
+        Configuration configuration = configurer.getConfiguration();
+        configuration.setDefaultEncoding("UFT-8");
+        Template template = configuration.getTemplate(templateName);
         StringWriter stringWriter = new StringWriter();
         BufferedWriter writer = new BufferedWriter(stringWriter);
-        template.setEncoding("UFT-8");
         template.process(paramMap, writer);
         String htmlStr = stringWriter.toString();
         writer.flush();

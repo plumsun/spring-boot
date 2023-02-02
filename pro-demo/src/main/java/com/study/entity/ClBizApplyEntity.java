@@ -1,9 +1,6 @@
 package com.study.entity;
 
 import lombok.Data;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.SQLDeleteAll;
-import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -48,6 +45,14 @@ public class ClBizApplyEntity implements Serializable {
 
 
     /**
+     * 修改时间
+     * nullable : true
+     * default  : null
+     */
+    @Column(name = "CONTAIN_DATE", nullable = true)
+    private java.util.Date containDate;
+
+    /**
      * 创建时间
      * nullable : true
      * default  : sysdate
@@ -55,6 +60,8 @@ public class ClBizApplyEntity implements Serializable {
     @Column(name = "CREATE_TIME", nullable = true,updatable = true)
     @CreatedDate
     private java.util.Date createTime;
+
+
 
     /**
      * 修改时间

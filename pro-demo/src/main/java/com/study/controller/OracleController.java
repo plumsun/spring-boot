@@ -1,13 +1,17 @@
 package com.study.controller;
 
+import com.alibaba.fastjson2.JSON;
 import com.study.entity.ClBizApplyEntity;
 import com.study.entity.ClCodShbesEntity;
+import com.study.entity.resp.RestResult;
 import com.study.service.OracleService;
+import com.study.utils.ResultUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 /**
  * @description:
@@ -84,5 +88,17 @@ public class OracleController {
     @GetMapping("delete/flag")
     public void deleteFlag(@RequestParam Long id){
         this.oracleService.deleteFlag(id);
+    }
+
+    /**
+     * 时间类型存储
+     *
+     */
+    @PostMapping("data/save")
+    public RestResult saveData(@RequestBody Map<String,Object> map){
+        String json = JSON.toJSONString(map);
+        ClBizApplyEntity entity = JSON.parseObject(json, ClBizApplyEntity.class);
+        String save = this.oracleService.save(entity);
+        return ResultUtils.success(save);
     }
 }

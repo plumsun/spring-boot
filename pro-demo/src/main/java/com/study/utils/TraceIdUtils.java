@@ -59,7 +59,7 @@ public class TraceIdUtils {
         //获取当前主机ip
         String localHost = null;
         try {
-            localHost = InetAddress.getLocalHost().getHostAddress().replace("\\.", "");
+            localHost = InetAddress.getLocalHost().getHostAddress().replace(".", "");
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }

@@ -1,6 +1,7 @@
 package com.study.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSON;
 import com.study.entity.ClBizApplyEntity;
 import com.study.entity.ClCodShbesEntity;
 import com.study.exception.ResultBaseException;
@@ -136,7 +137,7 @@ public class OracleServiceImpl implements OracleService {
     @Override
     public String save(ClBizApplyEntity entity) {
         ClBizApplyEntity save = this.clBizApplyDao.save(entity);
-        return JSONObject.toJSONString(save);
+        return JSON.toJSONString(save);
     }
 
     @Transactional(rollbackFor = Exception.class)
