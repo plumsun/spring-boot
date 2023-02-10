@@ -29,7 +29,6 @@
         <easyexcel.version>3.1.5</easyexcel.version>
         <poi.version>3.9</poi.version>
         <greendao.version>3.2.2</greendao.version>
-        <json-lib.version>2.4</json-lib.version>
         <xom.version>1.2.5</xom.version>
         <fastjson.version>2.0.22</fastjson.version>
         <axis.version>1.4</axis.version>
