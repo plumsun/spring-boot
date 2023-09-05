@@ -22,6 +22,7 @@ spring:
   kafka:
     producer:
       bootstrap-servers: 192.168.129.122:9092,192.168.129.123:9092,192.168.129.124:9092
+      topic: kafka-producer-test
       retries: 2 #生产者发送消息失败重试次数
       batch-size: 16384 # 同一批次内存大小（默认16K）
       buffer-memory: 314572800 #生产者内存缓存区大小(300M = 300*1024*1024)
@@ -56,6 +57,7 @@ spring:
     consumer:
       bootstrap-servers: 192.168.129.122:9092,192.168.129.123:9092,192.168.129.124:9092
       group-id: auto-dev #消费者组
+      topic: kafka-topic-consumer
       auto-offset-reset: earliest #消费方式: earliest：从头开始消费   latest：从最新的开始消费   默认latest
       enable-auto-commit: false #是否自动提交偏移量offset
       auto-commit-interval: 1S #前提是 enable-auto-commit=true。自动提交的频率
