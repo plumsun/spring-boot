@@ -1,0 +1,41 @@
+#server相关
+server:
+  port: 9003
+  max-http-header-size: 1MB
+  servlet:
+    context-path: /${spring.application.name}
+#spring相关
+spring:
+  application:
+    name: msda-cgdecl-server
+  data:
+    redis:
+      repositories:
+        enabled: false
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  datasource:
+    url: jdbc:mysql://localhost:3306/test?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&AllowPublicKeyRetrieval=True
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  redis:
+    cluster:
+      max-redirects: 6
+      nodes: 192.168.129.181:10000,192.168.129.181:10002,192.168.129.181:10003,192.168.129.181:10004,192.168.129.181:10005,192.168.129.181:10006
+    jedis:
+      pool:
+        max-active: 40
+        max-idle: 24
+        max-wait: -1
+        min-idle: 0
+    timeout: 1000
+mybatis-plus:
+  mapper-locations: mapper/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+  type-aliases-package: com.demo.entity
+tlog:
+  pattern: '[$traceId]'
