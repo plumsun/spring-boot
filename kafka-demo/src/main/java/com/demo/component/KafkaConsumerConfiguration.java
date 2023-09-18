@@ -17,14 +17,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 用于 大数据交互的kafka  集群配置连接
+ * kafka消费者配置
  *
  * @author LiHaoHan
  */
 @Slf4j
 @Configuration
 @Data
-public class KafkaConfiguration {
+public class KafkaConsumerConfiguration {
 
     @Value("${spring.kafka.consumer.bootstrap-servers}")
     private String consumerBootstrapServers;
