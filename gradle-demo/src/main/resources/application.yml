@@ -32,7 +32,7 @@ spring:
         min-idle: 0
     timeout: 1000
 mybatis-plus:
-  mapper-locations: mapper/*.xml
+  mapper-locations: gradle-demo/src/main/resources/*.xml
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscore-to-camel-case: true
