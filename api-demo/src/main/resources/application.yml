@@ -18,15 +18,11 @@ spring:
     port: 7001
 
 mybatis-plus:
+  mapper-locations: api-demo/src/main/resources/mapper/*.xml
   configuration:
-    cache-enabled: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscore-to-camel-case: true
-  typeAliasesPackage: com.demo.entity
-  global-config:
-    field-strategy: 0
-    db-column-underline: true
-    refresh-mapper: true
-    id-type: 0
+  type-aliases-package: com.demo.entity
 
 #定时任务
 task:
