@@ -15,29 +15,38 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @description: file控制层
- * @date: 2022/11/9 20:13
- * @author: LiHaoHan
- * @program: com.study.controller
+ * The type File controller.
+ *
+ * @author LiHaoHan
  */
 @Slf4j
 @RestController
 @RequestMapping("/file")
 public class FileController {
 
+    /**
+     * The Pdf u.
+     */
     @Resource
     PdfU pdfU;
 
-    //todo 文件上传
+    // todo 文件上传
 
 
+    /**
+     * Create pdf.
+     *
+     * @param name     the name
+     * @param response the response
+     * @throws Exception the exception
+     */
     @GetMapping("/toPDF")
     public void createPDF(@RequestParam String name, HttpServletResponse response) throws Exception {
         Map<String, Object> map = new HashMap<>();
         map.put("name", name);
         String html = pdfU.generateHtml("test.ftl", map);
-        HttpServletResponse resp = HttpUtils.buildPdfResp(response);
-        ServletOutputStream outputStream = resp.getOutputStream();
+        ServletOutputStream outputStream = response.getOutputStream();
         pdfU.generatePdfPlus(html, outputStream);
+        HttpUtils.buildPdfResp(response, name);
     }
 }

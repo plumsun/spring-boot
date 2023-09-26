@@ -66,4 +66,9 @@ public interface OracleService {
      *
      */
     String findData(Long id);
+
+    /**
+     *
+     */
+    void getCount();
 }

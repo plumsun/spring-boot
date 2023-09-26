@@ -29,7 +29,8 @@ spring:
   redis:
     host: 192.168.130.117
     port: 7001
-
+logging:
+  config: classpath:logback.xml
 #定时任务
 task:
   cron: 0 0/15 * * * ?

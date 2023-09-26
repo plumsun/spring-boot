@@ -16,9 +16,6 @@ import java.io.Serializable;
 @Data
 @Entity
 @Table(name = "CL_BIZ_APPLY")
-//@SQLDelete(sql = "update CL_BIZ_APPLY set DELETE_FLAG = 0 where PK_CLBIZAPPLY = ?")
-//@SQLDeleteAll(sql = "update CL_BIZ_APPLY set DELETE_FLAG = 0 where PK_CLBIZAPPLY = ?")
-//@Where(clause = "DELETE_FLAG = 1")
 @EntityListeners(AuditingEntityListener.class)
 public class ClBizApplyEntity implements Serializable {
 
@@ -51,6 +48,9 @@ public class ClBizApplyEntity implements Serializable {
      */
     @Column(name = "CONTAIN_DATE", nullable = true)
     private java.util.Date containDate;
+
+    @Column(name = "SHIP_ID", nullable = true)
+    private String shipId;
 
     /**
      * 创建时间

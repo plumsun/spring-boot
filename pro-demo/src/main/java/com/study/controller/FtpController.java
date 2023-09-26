@@ -14,10 +14,7 @@ import java.util.HashMap;
 import java.util.Properties;
 
 /**
- * @program: Ftp控制层
- * @Date: 2022/11/3
- * @Author: LiHaoHan
- * @Description:
+ * Ftp控制层
  */
 @Slf4j
 @RestController

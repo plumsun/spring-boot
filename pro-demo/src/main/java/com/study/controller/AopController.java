@@ -9,10 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 
 /**
- * @description: aop控制层
- * @date: 2021/11/4 9:42
- * @author: LiHaoHan
- * @program: com.study.controller
+ * aop控制层
+ *
+ * @author LiHaoHan
  */
 @Slf4j
 @RestController
@@ -26,11 +25,12 @@ public class AopController {
 
     /**
      * 切面测试，请求日志打印
-     * @param request
-     * @param id
-     * @param map
-     * @return
-     * @throws Exception
+     *
+     * @param request the request
+     * @param id      the id
+     * @param map     the map
+     * @return string
+     * @throws Exception the exception
      */
     @PostMapping("pointTest")
     public String upload(HttpServletRequest request,@RequestParam("id") String id,@RequestBody HashMap<String, Integer> map) throws Exception{
@@ -39,8 +39,9 @@ public class AopController {
 
     /**
      * 测试request对象
-     * @param request
-     * @return
+     *
+     * @param request the request
+     * @return string
      */
     @GetMapping("/test")
     public String test(HttpServletRequest request) {
@@ -51,8 +52,9 @@ public class AopController {
 
     /**
      * 测试aop日志打印
-     * @param map
-     * @param request
+     *
+     * @param map     the map
+     * @param request the request
      */
     @PostMapping("/demo")
     public void demo(@RequestBody HashMap<String, Integer> map, HttpServletRequest request) {
@@ -63,6 +65,9 @@ public class AopController {
 
     /**
      * 异步方法异常测试
+     *
+     * @return the string
+     * @throws Exception the exception
      */
     @GetMapping("async")
     public String asyncTest() throws Exception {
@@ -72,6 +77,9 @@ public class AopController {
 
     /**
      * 异步方法异常测试
+     *
+     * @return the string
+     * @throws Exception the exception
      */
     @GetMapping("asyncVoid")
     public String asyncVoid() throws Exception {

@@ -1,7 +1,8 @@
 package com.study.utils;
 
-
-import com.study.entity.resp.Response;
+import com.easipass.business.constant.Constant;
+import com.easipass.business.model.vo.Resp;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
@@ -11,19 +12,15 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 /**
- * http传输工具类
+ * The type Http resp utils.
  *
- * @author LiHaoHan
- * @date 2023/1/9
+ * @author Lihaohan
  */
-public class HttpUtils {
+@Slf4j
+public class HttpRespUtils {
 
-    private HttpUtils() {
-        throw new IllegalStateException("Utility class");
+    private HttpRespUtils() {
     }
-
-
-    private static final String UTF8 = "UTF-8";
 
     /**
      * Load excel resp http servlet response.
@@ -35,8 +32,8 @@ public class HttpUtils {
      */
     public static void loadExcelResp(HttpServletResponse response, String fileName) throws IOException {
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-        response.setCharacterEncoding(UTF8);
-        String encode = URLEncoder.encode(fileName, UTF8);
+        response.setCharacterEncoding(Constant.UTF8);
+        String encode = URLEncoder.encode(fileName, Constant.UTF8);
         response.setHeader(HttpHeaders.CONTENT_DISPOSITION,
                 String.format("attachment;filename=%s.xlsx", encode));
     }
@@ -49,9 +46,9 @@ public class HttpUtils {
      * @return the http servlet response
      * @throws UnsupportedEncodingException the unsupported encoding exception
      */
-    public static void buildPdfResp(HttpServletResponse response, String fileName) throws IOException {
+    public static void loadPdfResp(HttpServletResponse response, String fileName) throws IOException {
         response.setContentType("application/pdf;charset=UTF-8");
-        String encode = URLEncoder.encode(fileName, UTF8);
+        String encode = URLEncoder.encode(fileName, Constant.UTF8);
         response.setHeader(HttpHeaders.CONTENT_DISPOSITION,
                 String.format("attachment;filename=%s.pdf", encode));
         response.setHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, HttpHeaders.CONTENT_DISPOSITION);
@@ -67,7 +64,7 @@ public class HttpUtils {
     public static void resetResp(HttpServletResponse response) throws IOException {
         response.reset();
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        response.setCharacterEncoding(UTF8);
-        response.getWriter().println(Response.err());
+        response.setCharacterEncoding(Constant.UTF8);
+        response.getWriter().println(Resp.err());
     }
 }

@@ -1,18 +1,22 @@
 package com.study.aop;
 
-import cn.hutool.core.util.ObjectUtil;
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.support.spring.PropertyPreFilters;
-import com.study.utils.TraceIdUtils;
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.filter.ValueFilter;
+import com.study.config.AppContext;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
+import java.util.List;
 
 
 @Aspect
@@ -20,6 +24,10 @@ import javax.servlet.http.HttpServletResponse;
 @Slf4j
 public class BusinessAspect {
 
+    /**
+     * ing ~
+     */
+    private ThreadLocal<Long> threadLocal = new ThreadLocal<>();
 
     @Autowired
     HttpServletRequest request;
@@ -38,85 +46,85 @@ public class BusinessAspect {
      * @param joinPoint
      * @throws Throwable
      */
-    @Before("businessAuthenticationPointcut()")
-    public void doBefore(JoinPoint joinPoint) throws Throwable {
-        log.info("前置通知");
-
-        // 开始打印请求日志
-        print(joinPoint,request);
-        //设置traceId
-        initTraceId(request);
-    }
-
-    private void initTraceId(HttpServletRequest request) {
-        if (ObjectUtil.isEmpty(request.getHeader(TraceIdUtils.TRACE_ID))) {
-            TraceIdUtils.setTraceId(TraceIdUtils.createTraceId());
-        }
+    @Around("businessAuthenticationPointcut()")
+    public Object authAroundAspect(ProceedingJoinPoint joinPoint) throws Throwable {
+        return process(joinPoint);
     }
 
     /**
-     * 后置通知
+     * 执行流程
      *
-     * @param joinPoint
-     * @param rvt
-     * @return
+     * @param joinPoint the join point
+     * @return the object
+     * @throws Throwable the throwable
      */
-    @AfterReturning(returning = "rvt",
-            pointcut = "(within(@org.springframework.web.bind.annotation.RestController *)" +
-                    " || within(@org.springframework.stereotype.Controller *))")
-    public void afterExec(JoinPoint joinPoint, Object rvt) {
-        log.info("后置通知");
-        String json = excludeParam(rvt);
-        if (!json.contains("\"flag\":\"T\"") && !json.contains("\"message\":\"Success\"")) {
-            log.info("--- AfterReturningResult: " + json);
-        }
+    private Object process(ProceedingJoinPoint joinPoint) throws Throwable {
+        // first
+        this.doBefore(joinPoint);
+        // seconds
+        Object result = joinPoint.proceed();
+        // Object parse json.
+        this.doAfterReturning(joinPoint, result);
+        return result;
     }
 
-    @AfterThrowing(pointcut="execution(* com.study.*.*(..))",throwing = "e")
-    public void afterThrow(JoinPoint joinPoint, Throwable e) {
-        log.info("异常通知");
-        log.error("GlobalExceptionHandler...",e);
-        String json = excludeParam(e);
-        if (!json.contains("\"flag\":\"T\"") && !json.contains("\"message\":\"Success\"")) {
-            log.info("--- AfterReturningResult: " + json);
+    /**
+     * 前置
+     *
+     * @param joinPoint the join point
+     */
+    private void doBefore(JoinPoint joinPoint) {
+        threadLocal.set(System.currentTimeMillis());
+        Object[] args = joinPoint.getArgs();
+        print(args, request);
+    }
+
+    /**
+     * 后置正常返回
+     * 全局异常捕获后返回错误信息，会调用这个
+     *
+     * @param joinPoint the join point
+     * @param result    the result
+     */
+    private void doAfterReturning(JoinPoint joinPoint, Object result) {
+        String classname = joinPoint.getTarget().getClass().getSimpleName();
+        if (classname.equals("PdfController")) {
+            return;
         }
+        long timeTaken = System.currentTimeMillis() - threadLocal.get();
+        threadLocal.remove();
+        String json = this.excludeParam(result);
+        log.info("系统结束调用,耗时 = {}, result = {}", timeTaken, json);
+        AppContext.removeContext();
     }
 
 
-    public void print(JoinPoint point,HttpServletRequest request) {
-        // 打印请求相关参数
-        log.info("========================================== Start ==========================================");
+    public void print(Object[] objects, HttpServletRequest request) {
         // 打印请求 url
-        log.info("URL            : {}", request.getRequestURL().toString());
-        // 打印描述信息
-        // 打印 Http method
-        log.info("HTTP Method    : {}", request.getMethod());
-        // 打印调用 controller 的全路径以及执行方法
-        log.info("Class Method   : {}.{}", point.getSignature().getDeclaringTypeName(), point.getSignature().getName());
-        // 打印请求的 IP
-        log.info("IP             : {}", request.getRemoteAddr());
-        // 打印请求入参
-        log.info("Request Args   : {}", getParams(point));
+        log.info("---before URL: [{}],IP: [{}],Request Method: [{}],Request Args: [{}]",
+                request.getRequestURL().toString(),
+                request.getRemoteAddr(),
+                request.getMethod(),
+                getParams(objects));
     }
 
     /**
      * 获取请求参数
      *
-     * @param joinPoint
-     * @return
+     * @param objects the objects
+     * @return params
      */
-    private static String getParams(JoinPoint joinPoint) {
-        Object[] args = joinPoint.getArgs();
+    private static String getParams(Object[] objects) {
         StringBuilder params = new StringBuilder();
-        if (args != null && args.length > 0) {
-            for (Object arg : args) {
-                //判断参数类型
+        if (objects != null) {
+            for (Object arg : objects) {
+                // 判断参数类型
                 if ((arg instanceof HttpServletResponse) || (arg instanceof HttpServletRequest)
                         || (arg instanceof MultipartFile) || (arg instanceof MultipartFile[])) {
                     continue;
                 }
                 try {
-                    params.append(JSONObject.toJSONString(arg));
+                    params.append(JSON.toJSONString(arg));
                 } catch (Exception e) {
                     log.error(e.getMessage());
                 }
@@ -127,16 +135,18 @@ public class BusinessAspect {
 
     /**
      * 序列化String时排除出指定字段
+     *
      * @param params body
-     * @return
+     * @return string
      */
-    private String excludeParam(Object params){
-        String[] excludeProperties = {"password", "file"};
-        PropertyPreFilters filters = new PropertyPreFilters();
-        PropertyPreFilters.MySimplePropertyPreFilter filter = filters.addFilter();
-        filter.addExcludes(excludeProperties);
-        String json = JSONObject.toJSONString(params, filter);
-        log.info("请求参数: {}",json);
-        return json;
+    private String excludeParam(Object params) {
+        List<String> list = Arrays.asList("password", "file");
+        ValueFilter valueFilter = (Object object, String name, Object value) -> {
+            if (list.contains(name)) {
+                return "敏感数据";
+            }
+            return value;
+        };
+        return JSON.toJSONString(params, valueFilter);
     }
 }

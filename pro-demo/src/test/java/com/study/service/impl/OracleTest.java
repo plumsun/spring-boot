@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.NotNull;
+import java.util.Optional;
 
 
 /**
@@ -51,5 +52,11 @@ public class OracleTest {
         entity.setDeleteFlag("12");
         ClBizApplyEntity save = clBizApplyDao.save(entity);
         System.out.println("save = " + save);
+    }
+
+    @Test
+    public void get(){
+        Optional<ClBizApplyEntity> applyDaoById = this.clBizApplyDao.getById("JJ NAGOYA");
+        System.out.println("applyDaoById = " + applyDaoById);
     }
 }

@@ -20,11 +20,12 @@ public enum BusinessCode implements CodeI {
     CODE_500005(500, "记录不存在"),
     CODE_500006(500, "当前状态不可做任何申报"),
     CODE_500007(500, "发送海事局失败"),
+    CODE_500008(500, "操作失败"),
     SUCCESS(200, "成功"),
     ;
 
-    private Integer code;
-    private String message;
+    private final Integer code;
+    private final String message;
 
     BusinessCode(Integer code, String message) {
         this.code = code;

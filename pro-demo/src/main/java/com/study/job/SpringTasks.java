@@ -18,6 +18,8 @@ import org.springframework.scheduling.support.CronTrigger;
 import java.util.Date;
 
 /**
+ * spring 原生定时任务demo
+ *
  * @author User
  */
 @Configuration

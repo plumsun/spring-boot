@@ -14,10 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
- * @description:
- * @date: 2022/11/9 20:57
- * @author: LiHaoHan
- * @program: com.study.controller
+ * @author LiHaoHan
  */
 @Slf4j
 @RestController

@@ -8,32 +8,30 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 /**
- * @program: LogInterceptor
- * @Date: 2022/11/8
- * @Author: LiHaoHan
- * @Description:
+ * springmvc 拦截器
+ *
+ * @author LiHaoHan
  */
 @Slf4j
 @Component
 public class LogInterceptor implements HandlerInterceptor {
 
-    // private static ThreadLocal<Object> threadLocal = new ThreadLocal<>();
-
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        log.info("Interceptor preHandle");
+        log.info("DispatcherServlet执行链,接口执行之前,当前调用链线程名:{}", Thread.currentThread().getName());
         return true;
     }
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
-        log.info("Interceptor postHandle");
+        log.info("DispatcherServlet执行链,业务接口执行完毕,视图处理之前,当前调用链线程名:{}", Thread.currentThread().getName());
     }
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-        log.info("Interceptor afterCompletion");
+        log.info("DispatcherServlet执行链,接口执行成功回调执行,当前调用链线程名:{}", Thread.currentThread().getName());
     }
 }

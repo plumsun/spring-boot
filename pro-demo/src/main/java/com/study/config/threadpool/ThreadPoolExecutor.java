@@ -1,4 +1,4 @@
-package com.study.config.threadPool;
+package com.study.config.threadpool;
 
 import cn.hutool.core.collection.CollUtil;
 import com.study.utils.TraceIdUtils;

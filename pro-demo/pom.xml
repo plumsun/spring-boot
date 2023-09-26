@@ -30,7 +30,6 @@
         <poi.version>3.9</poi.version>
         <greendao.version>3.2.2</greendao.version>
         <xom.version>1.2.5</xom.version>
-        <fastjson.version>2.0.22</fastjson.version>
         <axis.version>1.4</axis.version>
         <org-json.version>20220924</org-json.version>
         <json-lib.version>2.4</json-lib.version>
@@ -82,12 +81,9 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <version>1.18.24</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-        </dependency>
         <!--日志-->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
@@ -130,10 +126,14 @@
 
         <!--json-->
         <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>${fastjson.version}</version>
-            <scope>compile</scope>
+            <groupId>com.alibaba.fastjson2</groupId>
+            <artifactId>fastjson2</artifactId>
+            <version>2.0.32</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.fastjson2</groupId>
+            <artifactId>fastjson2-extension-spring5</artifactId>
+            <version>2.0.32</version>
         </dependency>
 
         <!--工具包-->
@@ -181,7 +181,10 @@
             <groupId>wsdl4j</groupId>
             <artifactId>wsdl4j</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
         <!--Excel-->
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -239,6 +242,14 @@
             <artifactId>flying-saucer-pdf</artifactId>
             <version>9.1.22</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.alibaba/transmittable-thread-local -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>transmittable-thread-local</artifactId>
+            <version>2.12.1</version>
+        </dependency>
+
     </dependencies>
 
     <dependencyManagement>

@@ -30,6 +30,6 @@ public class GlobalRestExceptionHandler {
 
     @ExceptionHandler(value = ResultBaseException.class)
     public RestResult sExceptionHandler(HttpServletResponse response, ResultBaseException e) {
-        return ResultUtils.of(e.code, e.bizMessage);
+        return ResultUtils.err(e.getMessage());
     }
 }

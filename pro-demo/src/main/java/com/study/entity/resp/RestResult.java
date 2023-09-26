@@ -1,7 +1,7 @@
 package com.study.entity.resp;
 
 
-import com.alibaba.fastjson2.JSONObject;
+import com.alibaba.fastjson2.JSON;
 import com.study.utils.DateUtils;
 
 /**
@@ -72,6 +72,6 @@ public class RestResult {
 
     @Override
     public String toString() {
-        return JSONObject.toJSONString(this);
+        return JSON.toJSONString(this);
     }
 }

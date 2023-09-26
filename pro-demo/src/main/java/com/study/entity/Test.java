@@ -1,10 +1,12 @@
 package com.study.entity;
 
+import com.alibaba.excel.annotation.format.DateTimeFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 /**
  * @description: 测试实体类
@@ -19,4 +21,6 @@ public class Test {
     @NotNull
     String id;
     String name;
+    @DateTimeFormat("yyyy-MM-dd")
+    LocalDate date;
 }

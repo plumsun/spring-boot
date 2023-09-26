@@ -1,6 +1,5 @@
 package com.study.service.impl;
 
-import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson2.JSON;
 import com.study.entity.ClBizApplyEntity;
 import com.study.entity.ClCodShbesEntity;
@@ -11,6 +10,7 @@ import com.study.service.OracleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
@@ -21,6 +21,7 @@ import java.util.Optional;
 
 @Slf4j
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class OracleServiceImpl implements OracleService {
 
 
@@ -146,10 +147,22 @@ public class OracleServiceImpl implements OracleService {
         this.clBizApplyDao.deleteById(id);
     }
 
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
     @Override
     public String findData(Long id) {
-        Optional<ClBizApplyEntity> optional = this.clBizApplyDao.findById(id);
+        Optional<ClBizApplyEntity> optional = this.clBizApplyDao.getById(id);
         ClBizApplyEntity clBizApplyEntity = optional.get();
-        return JSONObject.toJSONString(clBizApplyEntity);
+        clBizApplyEntity.setPkClbizapply(null);
+        clBizApplyEntity.setShipId("lihaohan");
+        this.oracleService.save(clBizApplyEntity);
+
+        this.oracleService.getCount();
+
+        return JSON.toJSONString(clBizApplyEntity);
+    }
+
+    @Transactional
+    public void getCount(){
+        Optional<ClBizApplyEntity> lihaohan = this.clBizApplyDao.getById("JJ NAGOYA");
     }
 }
