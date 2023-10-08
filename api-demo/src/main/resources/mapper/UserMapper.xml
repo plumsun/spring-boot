@@ -6,7 +6,7 @@
 <mapper namespace="com.demo.mapper.UserMapper">
 
     <select id="getPro" parameterType="com.demo.entity.QueryVo" resultType="com.demo.entity.ResultVo">
-        select * from dept as d,emp as e where d.deptno = e.deptno
+        select * from dept as d,emp as e where d.deptno = e.deptno;
 	</select>
 
 </mapper>

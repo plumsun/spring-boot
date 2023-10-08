@@ -18,7 +18,7 @@ spring:
     port: 7001
 
 mybatis-plus:
-  mapper-locations: api-demo/src/main/resources/mapper/*.xml
+  mapper-locations: classpath*:/mapper/*.xml
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscore-to-camel-case: true
