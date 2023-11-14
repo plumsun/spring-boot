@@ -86,27 +86,22 @@ public class Response {
 
     public static Response success(Object data) {
         Response r = new Response(200, data);
-
         r.setMessage("success");
         return r;
     }
 
     public static Response success() {
         Response r = new Response(200, null);
-
         r.setMessage("success");
         return r;
     }
 
     public static Response success(String message, Object data) {
-        Response r = new Response(200, message, data);
-
-        return r;
+        return new Response(200, message, data);
     }
 
     public static Response err() {
         Response r = new Response(500, null);
-
         r.setMessage("error");
         return r;
     }
@@ -114,14 +109,12 @@ public class Response {
 
     public static Response err(String msg, Object data) {
         Response r = new Response(500, data);
-
         r.setMessage(msg);
         return r;
     }
 
     public static Response err(String msg) {
         Response r = new Response(500, msg);
-
         r.setData(null);
         return r;
     }
@@ -132,14 +125,12 @@ public class Response {
 
     public static Response err(int code, String msg) {
         Response r = new Response(code, msg);
-
         r.setData(null);
         return r;
     }
 
     public static Response build(Integer code, String msg, Object data) {
         Response r = new Response();
-
         r.setCode(code);
         r.setMessage(msg);
         r.setData(data);

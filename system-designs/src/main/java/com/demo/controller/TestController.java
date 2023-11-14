@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.SQLException;
+
 
 /**
  * 测试
@@ -26,9 +28,9 @@ public class TestController {
         return Response.success();
     }
 
-    @GetMapping("/feign")
-    public Response feign(){
-        return Response.success();
+    @GetMapping("/getPrepareSql")
+    public Response feign() throws SQLException {
+        return Response.success(projectService.getPrepareSql());
     }
 
     @GetMapping("/get")

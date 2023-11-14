@@ -11,4 +11,6 @@ import com.demo.entity.ResultVo;
 public interface ProjectService extends IService<Project> {
 
     ResultVo getData();
+
+    String getPrepareSql();
 }
