@@ -1,0 +1,35 @@
+server:
+  port: 8080
+
+
+spring:
+  application:
+    name: test
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://124.221.161.153:3306/test?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai
+    #    url: jdbc:oracle:thin:@192.168.130.138:1521:dev12c
+    #    url: jdbc:oracle:thin:@192.168.130.113:1521:testswin
+    username: root
+    password: ykBS#^jM
+  #    username: MSA_DG_DECL
+  #    password: etestpwd
+  #    url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai
+  #    username: root
+  #    password: root
+  servlet:
+    multipart:
+      max-file-size: 10240MB  #\u5355\u4E2A\u6587\u4EF6\u5927\u5C0F\u9650\u5236
+      max-request-size: 10240MB #\u603B\u6587\u4EF6\u5927\u5C0F\u9650\u5236\uFF08\u5141\u8BB8\u5B58\u50A8\u6587\u4EF6\u7684\u6587\u4EF6\u5939\u5927\u5C0F\uFF09
+  jpa:
+    database: mysql
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  redis:
+    host: 124.221.161.153
+    port: 6379
+    password: root
+logging:
+  config: classpath:logback.xml
