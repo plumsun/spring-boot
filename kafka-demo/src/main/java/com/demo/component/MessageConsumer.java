@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.annotation.RetryableTopic;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.support.TransactionTemplate;
@@ -23,7 +24,7 @@ public class MessageConsumer {
     @Autowired
     protected TransactionTemplate transactionTemplate;
 
-
+    @RetryableTopic
     @KafkaListener(topics = "${spring.kafka.consumer.topic}",
             groupId = "${spring.kafka.consumer.group-id}",
             containerFactory = "KafkaListenerContainerFactory")
