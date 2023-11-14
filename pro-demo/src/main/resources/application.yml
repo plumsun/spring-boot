@@ -6,11 +6,12 @@ spring:
   application:
     name: test
   datasource:
-    driver-class-name: oracle.jdbc.driver.OracleDriver
-    url: jdbc:oracle:thin:@192.168.130.138:1521:dev12c
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://124.221.161.153:3306/test?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai
+#    url: jdbc:oracle:thin:@192.168.130.138:1521:dev12c
 #    url: jdbc:oracle:thin:@192.168.130.113:1521:testswin
-    username: MSA_DG_DECL
-    password: easipass
+    username: root
+    password: ykBS#^jM
 #    username: MSA_DG_DECL
 #    password: etestpwd
   #    url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai
@@ -21,14 +22,14 @@ spring:
       max-file-size: 10240MB  #单个文件大小限制
       max-request-size: 10240MB #总文件大小限制（允许存储文件的文件夹大小）
   jpa:
-    database: oracle
+    database: mysql
     show-sql: true
-    hibernate:
-      ddl-auto: update
+#    hibernate:
+#      ddl-auto: update
     open-in-view: false
   redis:
-    host: 192.168.130.117
-    port: 7001
+    host: 124.221.161.153
+    port: 6379
 logging:
   config: classpath:logback.xml
 #定时任务

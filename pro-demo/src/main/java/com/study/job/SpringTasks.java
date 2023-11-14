@@ -46,8 +46,6 @@ public class SpringTasks implements SchedulingConfigurer {
                 log.error("Task-Error", e);
             }
             log.info("定时任务调用完成,用时{}", DateUtil.between(date, new Date(), DateUnit.MS));
-        }, triggerContext -> {
-            return new CronTrigger(cron).nextExecutionTime(triggerContext);
-        });
+        }, triggerContext -> new CronTrigger(cron).nextExecutionTime(triggerContext));
     }
 }

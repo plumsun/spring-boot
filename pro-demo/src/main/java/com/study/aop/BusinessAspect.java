@@ -2,6 +2,7 @@ package com.study.aop;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.filter.ValueFilter;
+import com.google.common.collect.Lists;
 import com.study.config.AppContext;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
@@ -15,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -76,6 +76,8 @@ public class BusinessAspect {
     private void doBefore(JoinPoint joinPoint) {
         threadLocal.set(System.currentTimeMillis());
         Object[] args = joinPoint.getArgs();
+        String test = request.getHeader("test");
+        AppContext.getContext().setValue(test);
         print(args, request);
     }
 
@@ -140,7 +142,7 @@ public class BusinessAspect {
      * @return string
      */
     private String excludeParam(Object params) {
-        List<String> list = Arrays.asList("password", "file");
+        List<String> list = Lists.newArrayList("password", "file");
         ValueFilter valueFilter = (Object object, String name, Object value) -> {
             if (list.contains(name)) {
                 return "敏感数据";

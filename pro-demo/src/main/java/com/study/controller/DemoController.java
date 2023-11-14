@@ -2,12 +2,12 @@ package com.study.controller;
 
 import com.study.entity.Test;
 import com.study.entity.resp.RestResult;
+import com.study.service.DemoService;
 import com.study.utils.ResultUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
 
 /**
  * The type Demo controller.
@@ -18,6 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("demo")
 public class DemoController {
+
+
+    @Resource
+    private DemoService demoService;
 
     /**
      * 公用response测试
@@ -39,5 +43,11 @@ public class DemoController {
     @PostMapping("get")
     public RestResult get(@RequestBody Test test){
         return ResultUtils.success(test);
+    }
+
+    @GetMapping("/thread-demo")
+    public RestResult threadDemo(){
+        this.demoService.threadTest();
+        return ResultUtils.success();
     }
 }

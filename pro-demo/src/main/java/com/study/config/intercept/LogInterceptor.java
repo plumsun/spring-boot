@@ -1,5 +1,6 @@
 package com.study.config.intercept;
 
+import com.study.config.AppContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -20,6 +21,7 @@ public class LogInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        AppContext.getContext().setValue(Thread.currentThread().getName());
         log.info("DispatcherServlet执行链,接口执行之前,当前调用链线程名:{}", Thread.currentThread().getName());
         return true;
     }
@@ -27,11 +29,15 @@ public class LogInterceptor implements HandlerInterceptor {
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
+        String value = AppContext.getContext().getValue();
+        System.out.println("value = " + value);
         log.info("DispatcherServlet执行链,业务接口执行完毕,视图处理之前,当前调用链线程名:{}", Thread.currentThread().getName());
     }
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+        String value = AppContext.getContext().getValue();
+        System.out.println("value = " + value);
         log.info("DispatcherServlet执行链,接口执行成功回调执行,当前调用链线程名:{}", Thread.currentThread().getName());
     }
 }

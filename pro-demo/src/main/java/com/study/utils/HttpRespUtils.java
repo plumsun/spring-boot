@@ -1,7 +1,6 @@
 package com.study.utils;
 
-import com.easipass.business.constant.Constant;
-import com.easipass.business.model.vo.Resp;
+import com.study.entity.resp.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -32,8 +31,8 @@ public class HttpRespUtils {
      */
     public static void loadExcelResp(HttpServletResponse response, String fileName) throws IOException {
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-        response.setCharacterEncoding(Constant.UTF8);
-        String encode = URLEncoder.encode(fileName, Constant.UTF8);
+        response.setCharacterEncoding("UTF-8");
+        String encode = URLEncoder.encode(fileName, "UTF-8");
         response.setHeader(HttpHeaders.CONTENT_DISPOSITION,
                 String.format("attachment;filename=%s.xlsx", encode));
     }
@@ -48,7 +47,7 @@ public class HttpRespUtils {
      */
     public static void loadPdfResp(HttpServletResponse response, String fileName) throws IOException {
         response.setContentType("application/pdf;charset=UTF-8");
-        String encode = URLEncoder.encode(fileName, Constant.UTF8);
+        String encode = URLEncoder.encode(fileName, "UTF-8");
         response.setHeader(HttpHeaders.CONTENT_DISPOSITION,
                 String.format("attachment;filename=%s.pdf", encode));
         response.setHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, HttpHeaders.CONTENT_DISPOSITION);
@@ -64,7 +63,7 @@ public class HttpRespUtils {
     public static void resetResp(HttpServletResponse response) throws IOException {
         response.reset();
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        response.setCharacterEncoding(Constant.UTF8);
-        response.getWriter().println(Resp.err());
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().println(Response.err());
     }
 }

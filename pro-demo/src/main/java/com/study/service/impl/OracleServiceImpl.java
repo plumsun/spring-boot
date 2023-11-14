@@ -79,7 +79,7 @@ public class OracleServiceImpl implements OracleService {
         } catch (Exception e) {
             log.error("error",e);
             //当抛出自定义异常时，需要将catch到异常的case信息也抛出
-            throw new ResultBaseException(500, "系统异常", "500", "程序出问题了，请稍后再试",e.getCause());
+            throw new ResultBaseException();
         }
     }
 

@@ -11,7 +11,7 @@ import java.io.Serializable;
 
 @Data
 @Entity
-@Table(name = "CL_COD_SHBES")
+// @Table(name = "CL_COD_SHBES")
 @EntityListeners(AuditingEntityListener.class)
 public class ClCodShbesEntity implements Serializable {
 
