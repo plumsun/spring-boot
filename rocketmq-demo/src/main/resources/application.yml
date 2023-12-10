@@ -33,3 +33,5 @@ spring:
     password: root
 logging:
   config: classpath:logback.xml
+
+retries: 3

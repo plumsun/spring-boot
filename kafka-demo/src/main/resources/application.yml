@@ -58,9 +58,9 @@ spring:
       bootstrap-servers: 192.168.129.122:9092,192.168.129.123:9092,192.168.129.124:9092
       group-id: auto-dev #消费者组
       topic: kafka-topic-consumer
-      auto-offset-reset: earliest #消费方式: earliest：从头开始消费   latest：从最新的开始消费   默认latest
+#      auto-offset-reset: earliest #消费方式: earliest：从头开始消费   latest：从最新的开始消费   默认latest,手动提交时无效
       enable-auto-commit: false #是否自动提交偏移量offset
-      auto-commit-interval: 1S #前提是 enable-auto-commit=true。自动提交的频率
+#      auto-commit-interval: 1S #前提是 enable-auto-commit=true。自动提交的频率
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       max-poll-records: 2

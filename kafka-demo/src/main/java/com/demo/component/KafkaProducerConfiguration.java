@@ -38,8 +38,12 @@ public class KafkaProducerConfiguration {
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, producerBootstrapServers);
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        // retries，发生失败重试次数
         props.put(ProducerConfig.RETRIES_CONFIG, 3);
+        // enable.idempotence
         props.put(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, "true");
+        // acks，指定当前消息要同步到broker副本数量。
+        props.put(ProducerConfig.ACKS_CONFIG, "all");
         props.put(ProducerConfig.ACKS_CONFIG, "all");
         return props;
     }

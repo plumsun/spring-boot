@@ -1,4 +1,4 @@
-package com.example.sdkdemo;
+package com.demo.service;
 
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;

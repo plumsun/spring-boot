@@ -30,7 +30,7 @@ public class ProjectServiceImpl extends ServiceImpl<UserMapper, Project> impleme
     public String getPrepareSql() {
         String str = "";
         SqlSession sqlSession = SqlHelper.sqlSession(Project.class);
-        try (PreparedStatement statement = sqlSession.getConnection().prepareStatement("select * from emp where `id` = ?;")) {
+        try (PreparedStatement statement = sqlSession.getConnection().prepareStatement("select * from project where `id` = ?;")) {
             statement.setString(1, "sd");
             str = statement.toString();
         } catch (Exception e) {

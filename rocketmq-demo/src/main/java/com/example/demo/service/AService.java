@@ -1,29 +1,27 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.User;
-import com.example.demo.repository.UserDao;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Recover;
+import org.springframework.retry.annotation.Retryable;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * @author LiHaoHan Created on 2023/11/2
+ * @author LiHaoHan Created on 2023/12/7
  */
-@Slf4j
-@Service
-public class AService {
-    @Resource
-    private UserDao userDao;
+public interface AService {
 
-    public List<User> get(List<Integer> ids) {
-        try {
-            userDao.findAllById(ids);
-            return userDao.findAllById(ids);
-        } catch (Exception e) {
-            log.error("[AService.get()]->数据查询失败", e);
-            return List.of();
-        }
-    }
+    public List<User> get(List<Integer> ids);
+    @Retryable(
+            maxAttempts = 6,
+            backoff = @Backoff(
+                    delay = 100,
+                    maxDelay = 100,
+                    multiplier = 2,
+                    random = true), include = {Exception.class}
+    )
+    void test() ;
+    @Recover
+    void recover();
 }

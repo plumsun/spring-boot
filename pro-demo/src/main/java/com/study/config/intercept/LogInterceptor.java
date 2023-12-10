@@ -38,6 +38,6 @@ public class LogInterceptor implements HandlerInterceptor {
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
         String value = AppContext.getContext().getValue();
         System.out.println("value = " + value);
-        log.info("DispatcherServlet执行链,接口执行成功回调执行,当前调用链线程名:{}", Thread.currentThread().getName());
+        log.info("DispatcherServlet执行链,视图处理后,当前调用链线程名:{}", Thread.currentThread().getName());
     }
 }
