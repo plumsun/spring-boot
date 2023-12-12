@@ -2,6 +2,7 @@ package com.study.config.threadpool;
 
 import com.alibaba.ttl.threadpool.TtlExecutors;
 import com.study.config.AppContext;
+import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
  *
  * @author LiHaoHan Created on 2023/7/23
  */
+@Configuration
 public class ThreadPoolExecutors {
 
     private ThreadPoolExecutors() {
@@ -35,7 +37,6 @@ public class ThreadPoolExecutors {
             new LinkedBlockingQueue<>(LIMIT_SIZE),
             new ThreadFactory() {
                 final AtomicInteger a = new AtomicInteger(0);
-
                 @Override
                 public Thread newThread(@Nonnull Runnable r) {
                     return new Thread(r, "ThreadPool-Future-" + a.getAndAdd(1));
