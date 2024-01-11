@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,7 +21,7 @@ public class BService {
 
     public List<User> get(List<Integer> ids){
         if(ids.isEmpty()){
-            return List.of();
+            return Collections.emptyList();
         }
         List<List<Integer>> idList = CollUtil.split(ids, 10);
         return idList.parallelStream().map(list -> this.aService.get(list))
