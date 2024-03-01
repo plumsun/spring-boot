@@ -1,0 +1,10 @@
+# 应用服务 WEB 访问端口
+server.port: 8080
+
+s3:
+  region: ap-southeast-1
+  aws_access_key_id: AKIATCKARSPZB4NUNEMF
+  aws_secret_access_key: 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
+  bucket: plum-test-bucket
+  capacity: 5
+  upload_directory: upload-test/
