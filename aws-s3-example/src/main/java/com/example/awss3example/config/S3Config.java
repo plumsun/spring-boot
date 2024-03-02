@@ -13,7 +13,7 @@ import java.net.URISyntaxException;
 // @RefreshScope
 @Data
 @Component
-@ConfigurationProperties(prefix = "s3")
+@ConfigurationProperties(prefix = "s3", ignoreInvalidFields = true, ignoreUnknownFields = false)
 public class S3Config {
 
     private String awsAccessKeyId;
