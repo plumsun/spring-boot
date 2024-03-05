@@ -6,10 +6,8 @@ import com.alibaba.excel.exception.ExcelDataConvertException;
 import com.study.entity.ExcelEntityTactics;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * excel处理类
@@ -30,8 +28,6 @@ public class ExcelListener extends AnalysisEventListener<ExcelEntityTactics> {
     }
 
     public List<ExcelEntityTactics> getCachedDataList() {
-        CopyOnWriteArrayList
-        Collections.synchronizedList(list);
         return cachedDataList;
     }
 
