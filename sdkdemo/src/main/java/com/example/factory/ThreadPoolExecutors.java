@@ -1,6 +1,7 @@
 package com.example.factory;
 
 import com.example.config.ThreadPoolConfiguration;
+import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
@@ -16,20 +17,15 @@ import java.util.concurrent.atomic.AtomicInteger;
  *
  * @author LiHaoHan Created on 2023/7/23
  */
-@SuppressWarnings("all")
 @Component
+@RequiredArgsConstructor
 public class ThreadPoolExecutors {
 
-    private static ThreadPoolConfiguration threadPoolConfiguration;
-
-
-    public ThreadPoolExecutors(ThreadPoolConfiguration threadPoolConfiguration) {
-        this.threadPoolConfiguration = threadPoolConfiguration;
-    }
+    private final ThreadPoolConfiguration threadPoolConfiguration;
 
     private static volatile ThreadPoolExecutor executor;
 
-    public static ThreadPoolExecutor newThreadPoolExecutors() {
+    public ThreadPoolExecutor newThreadPoolExecutors() {
         if (Objects.isNull(executor)) {
             synchronized (ThreadPoolExecutors.class) {
                 if (Objects.isNull(executor)) {

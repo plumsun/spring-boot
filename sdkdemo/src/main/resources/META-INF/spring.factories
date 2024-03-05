@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.example.sdkdemo.MyRunner,com.example.factory.RedisAspect,com.example.sdkdemo.MyEvent,com.example.sdkdemo.MyListen,com.example.sdkdemo.MyService
+com.example.sdkdemo.MyEvent,com.example.sdkdemo.MyListen,com.example.sdkdemo.MyService

@@ -1,11 +1,13 @@
 package com.example.config;
 
+import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 /**
  * @author LiHaoHan Created on 2023/10/15
  */
+@Data
 @Configuration
 @ConfigurationProperties(prefix = "thread.pool")
 public class ThreadPoolConfiguration {
@@ -29,37 +31,4 @@ public class ThreadPoolConfiguration {
      * 任务队列最大容量
      */
     private int workQueueSize = 10000;
-
-
-    public int getCorePoolSize() {
-        return corePoolSize;
-    }
-
-    public void setCorePoolSize(int corePoolSize) {
-        this.corePoolSize = corePoolSize;
-    }
-
-    public int getMaximumPoolSize() {
-        return maximumPoolSize;
-    }
-
-    public void setMaximumPoolSize(int maximumPoolSize) {
-        this.maximumPoolSize = maximumPoolSize;
-    }
-
-    public long getKeepAliveTime() {
-        return keepAliveTime;
-    }
-
-    public void setKeepAliveTime(long keepAliveTime) {
-        this.keepAliveTime = keepAliveTime;
-    }
-
-    public int getWorkQueueSize() {
-        return workQueueSize;
-    }
-
-    public void setWorkQueueSize(int workQueueSize) {
-        this.workQueueSize = workQueueSize;
-    }
 }
