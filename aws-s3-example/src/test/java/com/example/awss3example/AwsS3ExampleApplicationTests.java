@@ -64,9 +64,7 @@ class AwsS3ExampleApplicationTests {
         ListObjectsV2Request request = ListObjectsV2Request.builder().bucket("plum-test-bucket").build();
         ListObjectsV2Response response = s3Client.listObjectsV2(request);
         List<S3Object> objects = response.contents();
-        for (S3Object object : objects) {
-            System.out.println("Bucket url " + s3Config.getFileUrl(object.key()));
-        }
+        System.out.println("objects = " + objects);
     }
 
     @Test
@@ -144,7 +142,7 @@ class AwsS3ExampleApplicationTests {
         // Upload the parts of the file.
         int partNumber = 1;
         List<CompletedPart> completedParts = new ArrayList<>();
-        ByteBuffer bb = ByteBuffer.allocate(1024 * 1024 * s3Config.getCapacity()); // 5 MB byte buffer
+        ByteBuffer bb = ByteBuffer.allocate(1024 * 1024 * s3Config.getMultipartCapacity()); // 5 MB byte buffer
 
         try (RandomAccessFile file = new RandomAccessFile(filePath, "r")) {
             long fileSize = file.length();

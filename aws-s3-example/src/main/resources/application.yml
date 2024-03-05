@@ -2,9 +2,13 @@
 server.port: 8080
 
 s3:
-  region: ap-southeast-1
+  region: ap-northeast-1
   aws_access_key_id: xxx
   aws_secret_access_key: xxx
   bucket: xxx
-  capacity: 5
+  #  文件上传大小限制
+  #  capacity: 50
+  # 文件分片处理，每个分片大小
+  multipart_capacity: 5
+  #  文件上传路径 test/
   upload_directory: xxx
