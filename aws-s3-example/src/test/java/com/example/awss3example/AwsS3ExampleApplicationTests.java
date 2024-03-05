@@ -22,6 +22,7 @@ import software.amazon.awssdk.transfer.s3.model.UploadFileRequest;
 import javax.annotation.Resource;
 import java.io.File;
 import java.io.RandomAccessFile;
+import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.file.Paths;
 import java.time.Duration;
@@ -238,4 +239,13 @@ class AwsS3ExampleApplicationTests {
         }
     }
 
+    @Test
+    void getURL() {
+        GetUrlRequest request = GetUrlRequest.builder()
+                .bucket(s3Config.getBucket())
+                .key("upload-test/4989test.jpeg")
+                .build();
+        URL url = s3AsyncClient.utilities().getUrl(request);
+        log.info("The URL is :{}", url);
+    }
 }
