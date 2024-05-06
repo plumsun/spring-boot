@@ -1,6 +1,8 @@
 package com.example.awss3example.factory;
 
 import com.example.awss3example.config.S3Config;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
@@ -14,12 +16,14 @@ import javax.annotation.Resource;
 /**
  * @author LiHaoHan Created on 2024/2/19
  */
+@Slf4j
 @Component
 public class S3ClientFactory {
 
     @Resource
     private S3Config s3Config;
 
+    @RefreshScope
     @Bean
     public S3Client s3Client() {
         return S3Client.builder()

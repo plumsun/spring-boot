@@ -31,5 +31,6 @@ public class AopServiceImpl implements AopService {
     @Override
     public void asyncVoidTest() throws Exception {
         aopAsync.voidTest();
+        System.out.println("aopAsync = " + aopAsync);
     }
 }

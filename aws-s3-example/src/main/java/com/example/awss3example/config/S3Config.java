@@ -2,15 +2,16 @@ package com.example.awss3example.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
 
 /**
  * @author LiHaoHan Created on 2024/2/19
  */
-// @RefreshScope
+@RefreshScope
 @Data
 @Component
-@ConfigurationProperties(prefix = "s3", ignoreInvalidFields = true, ignoreUnknownFields = false)
+@ConfigurationProperties(prefix = "s3")
 public class S3Config {
 
     private String awsAccessKeyId;

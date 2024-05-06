@@ -1,6 +1,6 @@
 package com.study.service.impl;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import com.study.entity.resp.RestResult;
 import com.study.utils.ObjectUtils;
 import com.study.utils.PdfU;

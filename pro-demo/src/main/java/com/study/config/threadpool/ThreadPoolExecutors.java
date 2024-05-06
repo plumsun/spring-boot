@@ -8,8 +8,12 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.*;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
@@ -48,6 +52,23 @@ public class ThreadPoolExecutors {
     }
 
     public static void main(String[] args) {
+        ArrayList<Object> objects = new ArrayList<>(3);
+        objects.add(1);
+        objects.add(1);
+        objects.add(1);
+        objects.forEach((o) -> {
+            CompletableFuture<Void> completableFuture = CompletableFutures
+                    .orTimeout(CompletableFuture.runAsync(() -> {
+                        System.out.println("atawetawetawet");
+                    }), 23, TimeUnit.SECONDS)
+                    .exceptionally(ex -> {
+                        return null;
+                    });
+        });
+        // CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]));
+    }
+
+    private static void returnObject() {
         AppContext.getContext().setValue("hello");
         // 生成多个异步任务
         Executor executors = ThreadPoolExecutors.newThreadPoolExecutors();

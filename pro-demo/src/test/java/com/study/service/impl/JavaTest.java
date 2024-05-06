@@ -7,7 +7,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * @author LiHaoHan
@@ -22,7 +26,7 @@ public class JavaTest {
      */
     @Test
     public void objFieldTest() {
-        com.study.entity.Test test = new com.study.entity.Test("null", "2");
+        com.study.entity.Test test = new com.study.entity.Test();
         ObjectUtils.validateField(test);
     }
 
@@ -62,7 +66,7 @@ public class JavaTest {
     public void optionalTest2(){
         System.out.println(System.currentTimeMillis());
         String s = "";
-        com.study.entity.Test test = new com.study.entity.Test("1","class");
+        com.study.entity.Test test = new com.study.entity.Test();
         if(test.getId().equals("1")){
             s = test.getName();
         }else if(test.getId().equals("2")){
@@ -78,7 +82,7 @@ public class JavaTest {
     public void optionalTest3(){
         System.out.println(System.currentTimeMillis());
         String s = "";
-        com.study.entity.Test test = new com.study.entity.Test("1","class");
+        com.study.entity.Test test = new com.study.entity.Test();
         String id = test.getId();
         if(id.equals("1")){
             s = test.getName();

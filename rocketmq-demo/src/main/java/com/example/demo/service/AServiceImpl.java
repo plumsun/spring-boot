@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -13,9 +14,10 @@ import java.util.List;
  */
 @Slf4j
 @Service
-public class AServiceImpl implements AService{
+public class AServiceImpl implements AService {
     @Resource
     private UserDao userDao;
+
     @Override
     public List<User> get(List<Integer> ids) {
         try {
@@ -23,15 +25,15 @@ public class AServiceImpl implements AService{
             return userDao.findAllById(ids);
         } catch (Exception e) {
             log.error("[AService.get()]->数据查询失败", e);
-            return List.of();
+            return Collections.emptyList();
         }
     }
 
     @Override
     // @Transactional(rollbackFor = Exception.class)
-    public void test(){
+    public void test() {
         System.out.println("retry................");
-            int i = 1 / 0;
+        int i = 1 / 0;
     }
 
     @Override

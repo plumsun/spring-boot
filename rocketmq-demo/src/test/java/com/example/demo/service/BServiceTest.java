@@ -55,7 +55,8 @@ public class BServiceTest {
                             // 获取所有 future 执行结果
                             .map(CompletableFuture::join)
                             .forEach(atomicInteger::addAndGet);
-                    return atomicInteger.get();})
+                    return atomicInteger.get();
+                })
                 .exceptionally((throwable) -> {
                     log.error("执行异常", throwable);
                     return 0;

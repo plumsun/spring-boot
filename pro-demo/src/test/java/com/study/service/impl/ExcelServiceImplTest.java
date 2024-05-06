@@ -4,7 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import com.google.common.base.Joiner;
 import com.study.entity.StatusType;
 import com.study.entity.Test;
@@ -22,7 +22,11 @@ import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -59,12 +63,12 @@ public class ExcelServiceImplTest {
     public void test1() {
         ArrayList<Test> list1 = new ArrayList<>();
         // ArrayList<Test> list2 = new ArrayList<>();
-        list1.add(new Test("1", "li"));
-        list1.add(new Test("2", "l"));
+        // list1.add(new Test("1", "li"));
+        // list1.add(new Test("2", "l"));
 
         ArrayList<Test> list2 = new ArrayList<>();
-        list2.add(new Test("3", "li"));
-        list2.add(new Test("4", "l"));
+        // list2.add(new Test("3", "li"));
+        // list2.add(new Test("4", "l"));
         // ArrayList<Test> list2 = new ArrayList<>();
         //获取两个容器数据的交集
         Collection<Test> tests = CollUtil.union(list1, list2);

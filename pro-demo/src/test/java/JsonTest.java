@@ -1,16 +1,14 @@
-
-import com.study.App;
+import com.alibaba.fastjson2.JSON;
+import com.drew.imaging.ImageMetadataReader;
+import com.drew.lang.Rational;
+import com.drew.metadata.Metadata;
+import com.drew.metadata.exif.GpsDirectory;
+import com.study.service.impl.PriceSyncVo;
 import lombok.extern.slf4j.Slf4j;
-import net.sf.json.JSONObject;
-import net.sf.json.xml.XMLSerializer;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.File;
-import java.util.Comparator;
-import java.util.Map;
+import java.util.Collections;
 
 /**
  * @description:
@@ -19,48 +17,19 @@ import java.util.Map;
  * @program: PACKAGE_NAME
  */
 @Slf4j
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = App.class)
+// @RunWith(SpringRunner.class)
+// @SpringBootTest(classes = App.class)
 public class JsonTest {
     @org.junit.Test
     public void test() {
-        String str = "{\n" +
-                "    \"code\": 200,\n" +
-                "    \"body\": {\n" +
-                "        \"code\": 0,\n" +
-                "        \"data\": {\n" +
-                "            \"count_array\": [\n" +
-                "                {\n" +
-                "                    \"room_id\": \"boxx202110261555021_SR12\",\n" +
-                "                    \"user_count\": 0\n" +
-                "                },\n" +
-                "                {\n" +
-                "                    \"room_id\": \"boxx202109171524233_SR12\",\n" +
-                "                    \"user_count\": 0\n" +
-                "                },\n" +
-                "                {\n" +
-                "                    \"room_id\": \"boxx202109181426505_SR12\",\n" +
-                "                    \"user_count\": 0\n" +
-                "                },\n" +
-                "                {\n" +
-                "                    \"room_id\": \"boxx202109181523066_SR12\",\n" +
-                "                    \"user_count\": 0\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"seq\": 610402871,\n" +
-                "            \"version\": 1\n" +
-                "        },\n" +
-                "        \"message\": \"success\"\n" +
-                "    },\n" +
-                "    \"message\": \"success\",\n" +
-                "    \"timeStamp\": 1636015727097\n" +
-                "}";
-        JSONObject jsonObject = JSONObject.fromObject(str);
-        String body = jsonObject.optString("body");
-        log.info("body:{}",body);
-        JSONObject jsonObject1 = JSONObject.fromObject(body);
-        String data = jsonObject1.optString("data");
-        log.info("data:{}",data);
+        PriceSyncVo syncVo = new PriceSyncVo();
+        syncVo.setIV_PRSDT("1");
+        PriceSyncVo.ITITEMDTO ititemdto = new PriceSyncVo.ITITEMDTO();
+        ititemdto.setMATNR("1");
+
+        syncVo.setIT_ITEM(Collections.singletonList(ititemdto));
+        String jsonString = JSON.toJSONString(syncVo);
+        System.out.println("jsonString = " + jsonString);
     }
 
 
@@ -68,25 +37,41 @@ public class JsonTest {
 
     @org.junit.Test
     public void pai() {
-        String str = "{\"name\":\"xxx\",\"abc\":\"wwwwsss\"}";
-        com.alibaba.fastjson.JSONObject object = com.alibaba.fastjson.JSONObject.parseObject(str);
-        object.entrySet().stream().sorted(new Comparator<Map.Entry<String, Object>>() {
-            @Override
-            public int compare(Map.Entry<String, Object> o1, Map.Entry<String, Object> o2) {
-                return o1.getKey().compareTo(o2.getKey());
-            }
-        }).forEach(System.out::println);
-        String s = object.toJSONString();
-        log.info(s);
+
     }
 
     @Test
-    public void xmlToJson(){
-        XMLSerializer serializer = new XMLSerializer();
-        String json = serializer.readFromFile(new File("D:\\json.xml")).toString();
-        log.info(json);
-        com.study.entity.Test test = com.alibaba.fastjson.JSONObject.parseObject(json, com.study.entity.Test.class);
-        log.info("{}",test);
+    public void test1() {
+        try {
+            File jpegFile = new File("C:\\Users\\plums\\Desktop\\a1dd7267-795f-42df-9487-79f58ed9d8c4.jpg"); // 替换为你的图片路径
+            Metadata metadata = ImageMetadataReader.readMetadata(jpegFile);
+            GpsDirectory directory = metadata.getFirstDirectoryOfType(GpsDirectory.class);
+
+            if (directory.containsTag(GpsDirectory.TAG_LATITUDE)) {
+                String latitudeRef = directory.getString(GpsDirectory.TAG_LATITUDE);
+                Rational[] latitude = directory.getRationalArray(GpsDirectory.TAG_LATITUDE);
+                String longitudeRef = directory.getString(GpsDirectory.TAG_LONGITUDE);
+                Rational[] longitude = directory.getRationalArray(GpsDirectory.TAG_LONGITUDE);
+
+                if (latitude != null && longitude != null) {
+                    double lat = convertRationalToDegree(latitudeRef, latitude);
+                    double lon = convertRationalToDegree(longitudeRef, longitude);
+
+                    System.out.println("Latitude: " + lat);
+                    System.out.println("Longitude: " + lon);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static double convertRationalToDegree(String ref, Rational[] coordinates) {
+        double degree = coordinates[0].doubleValue() + (coordinates[1].doubleValue() / coordinates[2].doubleValue()) / 60.0;
+        if ("S".equals(ref) || "W".equals(ref)) {
+            degree = degree * -1;
+        }
+        return degree;
     }
 
 

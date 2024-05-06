@@ -32,8 +32,8 @@ public class RedisTest {
         System.out.println("infoList = " + infoList);
         ArrayList<Test> list1 = new ArrayList<>();
         // ArrayList<Test> list2 = new ArrayList<>();
-        list1.add(new Test("1", "li"));
-        list1.add(new Test("2", "l"));
+        list1.add(new Test());
+        list1.add(new Test());
         //CollUtil.union(list1,infoList);
         Collections.copy(list1,infoList);
         System.out.println("list1 = " + list1);

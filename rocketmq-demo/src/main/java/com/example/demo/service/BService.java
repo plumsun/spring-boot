@@ -19,8 +19,8 @@ public class BService {
     @Resource
     private AService aService;
 
-    public List<User> get(List<Integer> ids){
-        if(ids.isEmpty()){
+    public List<User> get(List<Integer> ids) {
+        if (ids.isEmpty()) {
             return Collections.emptyList();
         }
         List<List<Integer>> idList = CollUtil.split(ids, 10);
