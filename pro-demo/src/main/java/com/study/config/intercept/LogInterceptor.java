@@ -20,9 +20,10 @@ import javax.servlet.http.HttpServletResponse;
 public class LogInterceptor implements HandlerInterceptor {
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        AppContext.getContext().setValue(Thread.currentThread().getName());
-        log.info("DispatcherServlet执行链,接口执行之前,当前调用链线程名:{}", Thread.currentThread().getName());
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+        String threadName = Thread.currentThread().getName();
+        AppContext.getContext().setValue(threadName);
+        log.info("DispatcherServlet执行链,接口执行之前,当前调用链线程名:{}", threadName);
         return true;
     }
 
@@ -30,14 +31,13 @@ public class LogInterceptor implements HandlerInterceptor {
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
         String value = AppContext.getContext().getValue();
-        System.out.println("value = " + value);
-        log.info("DispatcherServlet执行链,业务接口执行完毕,视图处理之前,当前调用链线程名:{}", Thread.currentThread().getName());
+        log.info("DispatcherServlet执行链,业务接口执行完毕,视图处理之前,当前调用链线程名:{}", value);
     }
 
     @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
         String value = AppContext.getContext().getValue();
-        System.out.println("value = " + value);
-        log.info("DispatcherServlet执行链,视图处理后,当前调用链线程名:{}", Thread.currentThread().getName());
+        log.info("DispatcherServlet执行链,视图处理后,当前调用链线程名:{}", value);
+        AppContext.removeContext();
     }
 }

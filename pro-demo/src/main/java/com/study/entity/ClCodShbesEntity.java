@@ -5,7 +5,14 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
@@ -23,7 +30,6 @@ public class ClCodShbesEntity implements Serializable {
     @Id
     @SequenceGenerator(name = "SEQ_CLCODSHBES_PKCLCODSHBES", sequenceName = "SEQ_CLCODSHBES_PKCLCODSHBES", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_CLCODSHBES_PKCLCODSHBES")
-
     @NotNull
     @Column(name = "PK_CLCODSHIPBUS", nullable = true, length = 16)
     private Long pkClcodshipbus;

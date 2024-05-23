@@ -2,8 +2,11 @@ package com.study.config;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.alibaba.ttl.TransmittableThreadLocal;
+import com.study.entity.BusinessCode;
+import com.study.exception.ResultBaseException;
 
 import java.io.Serializable;
+import java.util.Optional;
 
 /**
  * 线程上下文
@@ -58,7 +61,12 @@ public class AppContext implements Serializable {
         this.token = token;
     }
 
-    public JSONObject getJsonObject() {
-        return jsonObject;
+    public <T> T getJsonObject(String key, Class<T> tClass) {
+        return Optional.ofNullable(jsonObject.getObject(key, tClass))
+                .orElseThrow(() -> new ResultBaseException(BusinessCode.CODE_500008));
+    }
+
+    public void setJsonObject(String key, Object val) {
+        jsonObject.put(key, val);
     }
 }

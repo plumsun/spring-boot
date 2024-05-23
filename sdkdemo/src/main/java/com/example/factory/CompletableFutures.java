@@ -2,7 +2,13 @@ package com.example.factory;
 
 import org.springframework.lang.NonNull;
 
-import java.util.concurrent.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.function.Function;
 
 /**
@@ -18,15 +24,15 @@ public class CompletableFutures<T> extends CompletableFuture<T> {
      * Or timeout completable future.
      *
      * @param <T>     the type parameter
-     * @param future  the future
+     * @param stage   the completion stage
      * @param timeout the timeout
      * @param unit    the unit
      * @return the completable future
      */
-    public static <T> CompletableFuture<T> orTimeout(CompletableFuture<T> future, long timeout, TimeUnit unit) {
+    public static <T> CompletableFuture<T> orTimeout(CompletionStage<T> stage, long timeout, TimeUnit unit) {
         final CompletableFuture<T> timeoutFuture = timeoutAfter(timeout, unit);
         // 哪个先完成 就apply哪一个结果
-        return future.applyToEither(timeoutFuture, Function.identity());
+        return timeoutFuture.applyToEither(stage, Function.identity());
     }
 
     /**

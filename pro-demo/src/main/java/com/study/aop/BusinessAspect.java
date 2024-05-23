@@ -77,7 +77,7 @@ public class BusinessAspect {
         threadLocal.set(System.currentTimeMillis());
         Object[] args = joinPoint.getArgs();
         String test = request.getHeader("test");
-        AppContext.getContext().setValue(test);
+        AppContext.getContext().setJsonObject("header", test);
         print(args, request);
     }
 
@@ -97,7 +97,6 @@ public class BusinessAspect {
         threadLocal.remove();
         String json = this.excludeParam(result);
         log.info("系统结束调用,耗时 = {}, result = {}", timeTaken, json);
-        AppContext.removeContext();
     }
 
 

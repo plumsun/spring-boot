@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
 import java.util.Date;
@@ -99,8 +98,8 @@ public class OracleServiceImpl implements OracleService {
         int i = 1 / 0;
     }
 
-    @PostConstruct
-    private void updateTime1(ClCodShbesEntity entity) throws Exception {
+    // @PostConstruct
+    public void updateTime1(ClCodShbesEntity entity) throws Exception {
         entity.setUpdateTime(new Date());
         this.clCodShbesDao.save(entity);
         int i = 1 / 0;
